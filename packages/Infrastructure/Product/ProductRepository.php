@@ -22,11 +22,11 @@ readonly final class ProductRepository implements ProductRepositoryInterface {
     private function toEntity(object $record): Product {
         return new Product(
             id: $record->id,
-            userId: $record->id,
-            name: $record->id,
-            summary: $record->id,
-            description: $record->id,
-            url: $record->id,
+            userId: $record->user_id,
+            name: $record->name,
+            summary: $record->summary,
+            description: $record->description,
+            url: $record->url,
         );
     }
 }
