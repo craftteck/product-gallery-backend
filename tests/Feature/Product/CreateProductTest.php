@@ -16,6 +16,7 @@ class CreateProductTest extends TestCase
     public function test_success(): void
     {
         $user = User::factory()->create();
+        $this->actingAs($user, 'web');
 
         $response = $this->post('/api/products', [
             'name' => 'name',
@@ -42,11 +43,12 @@ class CreateProductTest extends TestCase
     }
 
     /**
-     * バリデーション失敗
+     * バリデーションエラー
      */
     public function test_validation_error(): void
     {
-        User::factory()->create();
+        $user = User::factory()->create();
+        $this->actingAs($user, 'web');
 
         $response = $this->post('/api/products', [
             'name' => null,
@@ -73,5 +75,22 @@ class CreateProductTest extends TestCase
                 ]
             ]
         );
+    }
+
+    /**
+     * 認証エラー
+     */
+    public function test_authentication_failed(): void
+    {
+        $response = $this->post('/api/products', [
+            'name' => 'name',
+            'summary' => 'summary',
+            'description' => 'description',
+            'url' => 'url',
+        ]);
+
+        // NOTE: authミドルウェアは認証されていない場合に/loginにリダイレクトする
+        // TODO: 401エラーを返すようにしたい
+        $response->assertStatus(302);
     }
 }

@@ -18,6 +18,7 @@ class CreateProductInteractorTest extends TestCase
     public function test_execute(): void
     {
         $command = new CreateProductCommand(
+            userId: 1,
             name: 'name',
             summary: 'summary',
             description: 'description',

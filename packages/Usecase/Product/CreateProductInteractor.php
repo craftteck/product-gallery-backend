@@ -19,7 +19,7 @@ readonly final class CreateProductInteractor implements CreateProductInteractorI
     private function toEntiry(CreateProductCommand $command): Product {
         return new Product(
             id: null,
-            userId: 1, // TODO: 対象のユーザーIDを指定する
+            userId: $command->userId,
             name: $command->name,
             summary: $command->summary,
             description: $command->description,

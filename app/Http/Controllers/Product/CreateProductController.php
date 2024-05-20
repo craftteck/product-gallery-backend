@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\CreateProductRequest;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Packages\Usecase\Product\CreateProductCommand;
 use Packages\Usecase\Product\CreateProductDto;
 use Packages\Usecase\Product\CreateProductInteractorInterface;
@@ -24,6 +27,7 @@ class CreateProductController extends Controller
 
     private function toCommand(CreateProductRequest $request): CreateProductCommand {
         return new CreateProductCommand(
+            userId: (int) Auth::id(),
             name: $request->string('name'),
             summary: $request->string('summary'),
             description: $request->string('description'),
