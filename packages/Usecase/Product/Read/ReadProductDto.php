@@ -1,9 +1,10 @@
 <?php
 
-namespace Packages\Usecase\Product;
+namespace Packages\Usecase\Product\Read;
 
-readonly final class CreateProductCommand {
+readonly final class ReadProductDto {
     public function __construct(
+        public int $id,
         public int $userId,
         public string $name,
         public string $summary,

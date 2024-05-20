@@ -1,6 +1,6 @@
 <?php
 
-namespace Packages\Usecase\Product;
+namespace Packages\Usecase\Product\Create;
 
 readonly final class CreateProductDto {
     public function __construct(

@@ -4,13 +4,11 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\CreateProductRequest;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Packages\Usecase\Product\CreateProductCommand;
-use Packages\Usecase\Product\CreateProductDto;
-use Packages\Usecase\Product\CreateProductInteractorInterface;
+use Packages\Usecase\Product\Create\CreateProductCommand;
+use Packages\Usecase\Product\Create\CreateProductDto;
+use Packages\Usecase\Product\Create\CreateProductInteractorInterface;
 
 class CreateProductController extends Controller
 {

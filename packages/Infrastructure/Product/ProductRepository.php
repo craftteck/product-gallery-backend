@@ -7,6 +7,12 @@ use Packages\Domain\Product\ProductRepositoryInterface;
 use App\Models\Product as Model;
 
 readonly final class ProductRepository implements ProductRepositoryInterface {
+    public function findById(int $id): ?Product
+    {
+        $record = Model::find($id);
+        return $record ? $this->toEntity($record) : null;
+    }
+
     public function insert(Product $product): Product
     {
         $record = Model::create([

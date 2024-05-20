@@ -1,6 +1,6 @@
 <?php
 
-namespace Packages\Usecase\Product;
+namespace Packages\Usecase\Product\Create;
 
 use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;

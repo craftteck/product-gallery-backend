@@ -10,13 +10,21 @@ class CreateProductTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * 登録成功
-     */
-    public function test_success(): void
+    private User $user;
+
+    public function setUp(): void
     {
-        $user = User::factory()->create();
-        $this->actingAs($user, 'web');
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+    }
+
+    /**
+     * 200
+     */
+    public function test_200(): void
+    {
+        $this->actingAs($this->user, 'web');
 
         $body = [
             'name' => 'name',
@@ -36,7 +44,7 @@ class CreateProductTest extends TestCase
 
         $this->assertDatabaseHas('products', [
             'id' => 1,
-            'user_id' => $user->id,
+            'user_id' => $this->user->id,
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
@@ -45,12 +53,11 @@ class CreateProductTest extends TestCase
     }
 
     /**
-     * バリデーションエラー
+     * 400
      */
-    public function test_validation_error(): void
+    public function test_400(): void
     {
-        $user = User::factory()->create();
-        $this->actingAs($user, 'web');
+        $this->actingAs($this->user, 'web');
 
         $body = [
             'name' => null,
@@ -82,9 +89,9 @@ class CreateProductTest extends TestCase
     }
 
     /**
-     * 認証エラー
+     * 401エラー
      */
-    public function test_authentication_failed(): void
+    public function test_401(): void
     {
         $body = [
             'name' => 'name',

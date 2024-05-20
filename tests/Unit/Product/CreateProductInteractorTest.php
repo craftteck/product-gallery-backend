@@ -5,9 +5,9 @@ namespace Tests\Unit\Product;
 use Mockery;
 use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
-use Packages\Usecase\Product\CreateProductCommand;
-use Packages\Usecase\Product\CreateProductDto;
-use Packages\Usecase\Product\CreateProductInteractor;
+use Packages\Usecase\Product\Create\CreateProductCommand;
+use Packages\Usecase\Product\Create\CreateProductDto;
+use Packages\Usecase\Product\Create\CreateProductInteractor;
 use PHPUnit\Framework\TestCase;
 
 class CreateProductInteractorTest extends TestCase

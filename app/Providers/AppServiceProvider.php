@@ -6,8 +6,10 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\ServiceProvider;
 use Packages\Domain\Product\ProductRepositoryInterface;
 use Packages\Infrastructure\Product\ProductRepository;
-use Packages\Usecase\Product\CreateProductInteractor;
-use Packages\Usecase\Product\CreateProductInteractorInterface;
+use Packages\Usecase\Product\Create\CreateProductInteractor;
+use Packages\Usecase\Product\Create\CreateProductInteractorInterface;
+use Packages\Usecase\Product\Read\ReadProductInteractor;
+use Packages\Usecase\Product\Read\ReadProductInteractorInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +26,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             CreateProductInteractorInterface::class,
             CreateProductInteractor::class,
+        );
+
+        $this->app->bind(
+            ReadProductInteractorInterface::class,
+            ReadProductInteractor::class,
         );
     }
 
