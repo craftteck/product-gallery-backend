@@ -18,12 +18,14 @@ class CreateProductTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user, 'web');
 
-        $response = $this->post('/api/products', [
+        $body = [
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
             'url' => 'url',
-        ]);
+        ];
+        $headers = ['Accept' => 'application/json'];
+        $response = $this->post('/api/products', $body, $headers);
 
         $response->assertStatus(200)->assertJson([
             'name' => 'name',
@@ -50,12 +52,14 @@ class CreateProductTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user, 'web');
 
-        $response = $this->post('/api/products', [
+        $body = [
             'name' => null,
             'summary' => null,
             'description' => null,
             'url' => null,
-        ]);
+        ];
+        $headers = ['Accept' => 'application/json'];
+        $response = $this->post('/api/products', $body, $headers);
 
         $response->assertStatus(400)->assertJson(
             [
@@ -82,15 +86,17 @@ class CreateProductTest extends TestCase
      */
     public function test_authentication_failed(): void
     {
-        $response = $this->post('/api/products', [
+        $body = [
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
             'url' => 'url',
-        ]);
+        ];
+        $headers = ['Accept' => 'application/json'];
+        $response = $this->post('/api/products', $body, $headers);
 
-        // NOTE: authミドルウェアは認証されていない場合に/loginにリダイレクトする
-        // TODO: 401エラーを返すようにしたい
-        $response->assertStatus(302);
+        $response->assertStatus(401)->assertJson([
+            'message' => 'Unauthenticated.',
+        ]);
     }
 }
