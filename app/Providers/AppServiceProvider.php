@@ -8,6 +8,8 @@ use Packages\Domain\Product\ProductRepositoryInterface;
 use Packages\Infrastructure\Product\ProductRepository;
 use Packages\Usecase\Product\Create\CreateProductInteractor;
 use Packages\Usecase\Product\Create\CreateProductInteractorInterface;
+use Packages\Usecase\Product\Delete\DeleteProductInteractor;
+use Packages\Usecase\Product\Delete\DeleteProductInteractorInterface;
 use Packages\Usecase\Product\Read\ReadProductInteractor;
 use Packages\Usecase\Product\Read\ReadProductInteractorInterface;
 
@@ -31,6 +33,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ReadProductInteractorInterface::class,
             ReadProductInteractor::class,
+        );
+
+        $this->app->bind(
+            DeleteProductInteractorInterface::class,
+            DeleteProductInteractor::class,
         );
     }
 

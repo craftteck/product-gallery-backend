@@ -19,6 +19,7 @@ class ReadProductInteractorTest extends TestCase
     {
         $command = new ReadProductCommand(id: 1);
 
+        // TODO: Laravel組み込みのメソッドを使用してモックしたい
         $repository = Mockery::mock(ProductRepositoryInterface::class);
         $repository->shouldReceive('findById')
             ->once()

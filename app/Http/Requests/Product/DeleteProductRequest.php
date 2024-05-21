@@ -4,7 +4,7 @@ namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReadProductRequest extends FormRequest
+class DeleteProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,6 +21,9 @@ class ReadProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [];
+        return [
+            'ids' => 'required|array',
+            'ids.*' => 'integer',
+        ];
     }
 }

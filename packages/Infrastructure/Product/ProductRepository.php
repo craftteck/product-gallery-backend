@@ -25,6 +25,11 @@ readonly final class ProductRepository implements ProductRepositoryInterface {
         return $this->toEntity($record);
     }
 
+    public function delete(array $ids): void
+    {
+        Model::whereIn('id', $ids)->delete();
+    }
+
     private function toEntity(object $record): Product {
         return new Product(
             id: $record->id,

@@ -53,9 +53,9 @@ class CreateProductTest extends TestCase
     }
 
     /**
-     * 400
+     * 422
      */
-    public function test_400(): void
+    public function test_422(): void
     {
         $this->actingAs($this->user, 'web');
 
@@ -68,7 +68,7 @@ class CreateProductTest extends TestCase
         $headers = ['Accept' => 'application/json'];
         $response = $this->post('/api/products', $body, $headers);
 
-        $response->assertStatus(400)->assertJson(
+        $response->assertStatus(422)->assertJson(
             [
                 "errors" => [
                     "name" => [
@@ -89,7 +89,7 @@ class CreateProductTest extends TestCase
     }
 
     /**
-     * 401エラー
+     * 401
      */
     public function test_401(): void
     {
