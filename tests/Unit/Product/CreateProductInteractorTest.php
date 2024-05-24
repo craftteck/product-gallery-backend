@@ -25,21 +25,21 @@ class CreateProductInteractorTest extends TestCase
             url: 'url',
         );
 
-        // TODO: Laravel組み込みのメソッドを使用してモックしたい
-        $repository = Mockery::mock(ProductRepositoryInterface::class);
-        $repository->shouldReceive('insert')
-            ->once()
-            ->with(Mockery::on(function ($argument) {
-                return
-                    $argument instanceof Product &&
-                    $argument->id === null &&
-                    $argument->userId === 1 &&
-                    $argument->name === 'name' &&
-                    $argument->summary === 'summary' &&
-                    $argument->description === 'description' &&
-                    $argument->url === 'url';
-            }))
-            ->andReturn(
+        $repository = $this->createMock(ProductRepositoryInterface::class);
+        $repository
+            ->expects($this->once())
+            ->method('insert')
+            ->with($this->equalTo(
+                new Product(
+                    id: null,
+                    userId: 1,
+                    name: 'name',
+                    summary: 'summary',
+                    description: 'description',
+                    url: 'url',
+                )
+            ))
+            ->willReturn(
                 new Product(
                     id: 1,
                     userId: 1,
