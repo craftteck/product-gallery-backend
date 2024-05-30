@@ -22,6 +22,7 @@ class CreateProductRequest extends FormRequest
     public function rules(): array
     {
         // TODO: バリデーションは別途検討（文字数上限など）
+        // TODO: バリデーションのテスト
         return [
             'name' => 'required',
             'summary' => 'required',
