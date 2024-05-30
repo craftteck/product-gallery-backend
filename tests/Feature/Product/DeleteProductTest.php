@@ -22,6 +22,9 @@ class DeleteProductTest extends TestCase
         Product::factory(3)->create(['user_id' => $this->user->id]);
     }
 
+    /**
+     * 204
+     */
     public function test_204(): void
     {
         $this->actingAs($this->user, 'web');
@@ -36,6 +39,20 @@ class DeleteProductTest extends TestCase
         $this->assertDatabaseMissing('products', ['id' => 2]);
 
         $this->assertDatabaseHas('products', ['id' => 3]);
+    }
+
+    /**
+     * 401
+     */
+    public function test_401(): void
+    {
+        $body = ['ids' => [1, 2]];
+        $headers = ['Accept' => 'application/json'];
+        $response = $this->post('/api/products', $body, $headers);
+
+        $response->assertStatus(401)->assertJson([
+            'message' => 'Unauthenticated.',
+        ]);
     }
 
     /**
@@ -60,17 +77,5 @@ class DeleteProductTest extends TestCase
         );
     }
 
-    /**
-     * 401
-     */
-    public function test_401(): void
-    {
-        $body = ['ids' => [1, 2]];
-        $headers = ['Accept' => 'application/json'];
-        $response = $this->post('/api/products', $body, $headers);
-
-        $response->assertStatus(401)->assertJson([
-            'message' => 'Unauthenticated.',
-        ]);
-    }
+    
 }

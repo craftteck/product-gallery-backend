@@ -12,6 +12,8 @@ use Packages\Usecase\Product\Delete\DeleteProductInteractor;
 use Packages\Usecase\Product\Delete\DeleteProductInteractorInterface;
 use Packages\Usecase\Product\Read\ReadProductInteractor;
 use Packages\Usecase\Product\Read\ReadProductInteractorInterface;
+use Packages\Usecase\Product\Update\UpdateProductInteractor;
+use Packages\Usecase\Product\Update\UpdateProductInteractorInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +35,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ReadProductInteractorInterface::class,
             ReadProductInteractor::class,
+        );
+
+        $this->app->bind(
+            UpdateProductInteractorInterface::class,
+            UpdateProductInteractor::class,
         );
 
         $this->app->bind(

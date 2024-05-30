@@ -2,21 +2,28 @@
 
 namespace Tests\Feature\Product;
 
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class CreateProductTest extends TestCase
+class UpdateProductTest extends TestCase
 {
     use RefreshDatabase;
 
     private User $user;
+
+    private Product $product;
 
     public function setUp(): void
     {
         parent::setUp();
 
         $this->user = User::factory()->create();
+
+        $this->product = Product::factory()->create([
+            'user_id' => $this->user->id,
+        ]);
     }
 
     /**
@@ -33,7 +40,7 @@ class CreateProductTest extends TestCase
             'url' => 'url',
         ];
         $headers = ['Accept' => 'application/json'];
-        $response = $this->post('/api/products', $body, $headers);
+        $response = $this->put("/api/products/{$this->product->id}", $body, $headers);
 
         $response->assertStatus(200)->assertJson([
             'name' => 'name',
@@ -43,7 +50,7 @@ class CreateProductTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('products', [
-            'id' => 1,
+            'id' => $this->product->id,
             'user_id' => $this->user->id,
             'name' => 'name',
             'summary' => 'summary',
@@ -64,10 +71,38 @@ class CreateProductTest extends TestCase
             'url' => 'url',
         ];
         $headers = ['Accept' => 'application/json'];
-        $response = $this->post('/api/products', $body, $headers);
+        $response = $this->put("/api/products/{$this->product->id}", $body, $headers);
 
         $response->assertStatus(401)->assertJson([
             'message' => 'Unauthenticated.',
+        ]);
+    }
+
+    /**
+     * 404
+     */
+    public function test_404(): void
+    {
+        $this->actingAs($this->user, 'web');
+
+        $headers = ['Accept' => 'application/json'];
+        $body = [
+            'name' => 'name',
+            'summary' => 'summary',
+            'description' => 'description',
+            'url' => 'url',
+        ];
+
+        // パスパラメータが不正
+        $response = $this->put("/api/products/abc", $body, $headers);
+        $response->assertStatus(404)->assertJson([
+            'message' => "The route api/products/abc could not be found.",
+        ]);
+
+        // 指定されたパスパラメータのリソースが存在しない
+        $response = $this->put("/api/products/0", $body, $headers);
+        $response->assertStatus(404)->assertJson([
+            'message' => "Target resource not found.",
         ]);
     }
 
@@ -85,7 +120,7 @@ class CreateProductTest extends TestCase
             'url' => null,
         ];
         $headers = ['Accept' => 'application/json'];
-        $response = $this->post('/api/products', $body, $headers);
+        $response = $this->put("/api/products/{$this->product->id}", $body, $headers);
 
         $response->assertStatus(422)->assertJson(
             [

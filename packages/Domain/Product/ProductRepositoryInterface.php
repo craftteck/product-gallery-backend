@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface ProductRepositoryInterface {
     /**
-     * IDに該当するプロダクトを取得する
+     * プロダクトを取得する
      */
     public function findById(int $id): ?Product;
 
@@ -14,6 +14,11 @@ interface ProductRepositoryInterface {
      * プロダクトを登録する
      */
     public function insert(Product $product): Product;
+
+    /**
+     * プロダクトを更新する
+     */
+    public function update(Product $product): Product;
 
     /**
      * プロダクトを削除する
