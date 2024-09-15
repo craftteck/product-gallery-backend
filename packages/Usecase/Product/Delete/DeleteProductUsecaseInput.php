@@ -5,7 +5,8 @@ namespace Packages\Usecase\Product\Delete;
 /**
  * プロダクト削除のコマンドクラス
  */
-readonly final class DeleteProductUsecaseInput {
+final readonly class DeleteProductUsecaseInput
+{
     /**
      * コンストラクタ
      *
@@ -13,5 +14,6 @@ readonly final class DeleteProductUsecaseInput {
      */
     public function __construct(
         public array $ids,
-    ) {}
+    ) {
+    }
 }

@@ -5,7 +5,8 @@ namespace Packages\Usecase\Product\Read;
 /**
  * プロダクト取得のDTO
  */
-readonly final class ReadProductUsecaseOutput {
+final readonly class ReadProductUsecaseOutput
+{
     /**
      * コンストラクタ
      *
@@ -23,5 +24,6 @@ readonly final class ReadProductUsecaseOutput {
         public string $summary,
         public string $description,
         public string $url,
-    ) {}
+    ) {
+    }
 }

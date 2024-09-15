@@ -5,7 +5,8 @@ namespace Packages\Usecase\Product\Create;
 /**
  * プロダクト作成のコマンドクラス
  */
-readonly final class CreateProductUsecaseInput {
+final readonly class CreateProductUsecaseInput
+{
     /**
      * コンストラクタ
      *
@@ -21,5 +22,6 @@ readonly final class CreateProductUsecaseInput {
         public string $summary,
         public string $description,
         public string $url,
-    ) {}
+    ) {
+    }
 }

@@ -9,7 +9,8 @@ use App\Models\Product as Model;
 /**
  * プロダクトのリポジトリクラス
  */
-readonly final class ProductRepository implements ProductRepositoryInterface {
+final readonly class ProductRepository implements ProductRepositoryInterface
+{
     /**
      * IDに該当するプロダクトを取得する
      *
@@ -84,7 +85,8 @@ readonly final class ProductRepository implements ProductRepositoryInterface {
      * @param Model $record
      * @return Product
      */
-    private function toEntity(Model $record): Product {
+    private function toEntity(Model $record): Product
+    {
         return new Product(
             id: $record->id,
             userId: $record->user_id,

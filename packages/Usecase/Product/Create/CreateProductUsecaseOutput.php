@@ -5,7 +5,8 @@ namespace Packages\Usecase\Product\Create;
 /**
  * プロダクト作成のDTOクラス
  */
-readonly final class CreateProductUsecaseOutput {
+final readonly class CreateProductUsecaseOutput
+{
     /**
      * コンストラクタ
      *
@@ -23,5 +24,6 @@ readonly final class CreateProductUsecaseOutput {
         public string $summary,
         public string $description,
         public string $url,
-    ) {}
+    ) {
+    }
 }

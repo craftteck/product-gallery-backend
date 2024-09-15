@@ -8,7 +8,8 @@ use Packages\Domain\Product\ProductRepositoryInterface;
 /**
  * プロダクト作成のインタラクタークラス
  */
-readonly final class CreateProductUsecase implements CreateProductUsecaseInterface {
+final readonly class CreateProductUsecase implements CreateProductUsecaseInterface
+{
     /**
      * コンストラクタ
      *
@@ -16,7 +17,8 @@ readonly final class CreateProductUsecase implements CreateProductUsecaseInterfa
      */
     public function __construct(
         private ProductRepositoryInterface $repository,
-    ) {}
+    ) {
+    }
 
     /**
      * プロダクトを作成する
@@ -36,7 +38,8 @@ readonly final class CreateProductUsecase implements CreateProductUsecaseInterfa
      * @param CreateProductUsecaseInput $usecaseInput
      * @return Product
      */
-    private function toEntiry(CreateProductUsecaseInput $usecaseInput): Product {
+    private function toEntiry(CreateProductUsecaseInput $usecaseInput): Product
+    {
         return new Product(
             id: null,
             userId: $usecaseInput->userId,
@@ -53,7 +56,8 @@ readonly final class CreateProductUsecase implements CreateProductUsecaseInterfa
      * @param Product $product
      * @return CreateProductUsecaseOutput
      */
-    private function toUsecaseOutput(Product $product): CreateProductUsecaseOutput {
+    private function toUsecaseOutput(Product $product): CreateProductUsecaseOutput
+    {
         /** @var int $productId */
         $productId = $product->id;
 

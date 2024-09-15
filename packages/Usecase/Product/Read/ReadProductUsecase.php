@@ -10,13 +10,15 @@ use Symfony\Component\Translation\Exception\NotFoundResourceException;
 /**
  * プロダクト取得のインタラクタークラス
  */
-readonly final class ReadProductUsecase implements ReadProductUsecaseInterface {
+final readonly class ReadProductUsecase implements ReadProductUsecaseInterface
+{
     /**
      * @param ProductRepositoryInterface $repository
      */
     public function __construct(
         private ProductRepositoryInterface $repository,
-    ) {}
+    ) {
+    }
 
     /**
      * プロダクトを取得する
@@ -41,7 +43,8 @@ readonly final class ReadProductUsecase implements ReadProductUsecaseInterface {
      * @param Product $product
      * @return ReadProductUsecaseOutput
      */
-    private function toUsecaseOutput(Product $product): ReadProductUsecaseOutput {
+    private function toUsecaseOutput(Product $product): ReadProductUsecaseOutput
+    {
         return new ReadProductUsecaseOutput(
             id: (int) $product->id,
             userId: $product->userId,

@@ -5,7 +5,8 @@ namespace Packages\Domain\Product;
 /**
  * プロダクト
  */
-readonly final class Product {
+final readonly class Product
+{
     /**
      * @param ?int $id
      * @param int $userId
@@ -21,5 +22,6 @@ readonly final class Product {
         public string $summary,
         public string $description,
         public string $url,
-    ) {}
+    ) {
+    }
 }

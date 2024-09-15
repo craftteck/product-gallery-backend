@@ -5,7 +5,8 @@ namespace Packages\Usecase\Product\Read;
 /**
  * プロダクト取得のコマンドクラス
  */
-readonly final class ReadProductUsecaseInput {
+final readonly class ReadProductUsecaseInput
+{
     /**
      * コンストラクタ
      *
@@ -13,5 +14,6 @@ readonly final class ReadProductUsecaseInput {
      */
     public function __construct(
         public int $id,
-    ) {}
+    ) {
+    }
 }

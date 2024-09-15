@@ -22,7 +22,8 @@ class CreateProductController extends Controller
      */
     public function __construct(
         private CreateProductUsecaseInterface $usecase,
-    ) {}
+    ) {
+    }
 
     /**
      * プロダクトを新規登録する
@@ -31,7 +32,8 @@ class CreateProductController extends Controller
      * @return JsonResponse
      * TODO: OpenAPIのリクエストスキーマと一致させる方法を検討
      */
-    public function create(CreateProductRequest $request): JsonResponse {
+    public function create(CreateProductRequest $request): JsonResponse
+    {
         $usecaseInput = $this->toUsecaseInput($request);
         $usecaseOutput = $this->usecase->execute($usecaseInput);
         return $this->toResponse($usecaseOutput);
@@ -43,7 +45,8 @@ class CreateProductController extends Controller
      * @param CreateProductRequest $request
      * @return CreateProductUsecaseInput
      */
-    private function toUsecaseInput(CreateProductRequest $request): CreateProductUsecaseInput {
+    private function toUsecaseInput(CreateProductRequest $request): CreateProductUsecaseInput
+    {
         return new CreateProductUsecaseInput(
             userId: (int) Auth::id(),
             name: $request->string('name'),
@@ -59,7 +62,8 @@ class CreateProductController extends Controller
      * @param CreateProductUsecaseOutput $usecaseOutput
      * @return JsonResponse
      */
-    private function toResponse(CreateProductUsecaseOutput $usecaseOutput): JsonResponse {
+    private function toResponse(CreateProductUsecaseOutput $usecaseOutput): JsonResponse
+    {
         return response()->json(get_object_vars($usecaseOutput));
     }
 }

@@ -7,7 +7,8 @@ use Packages\Domain\Product\ProductRepositoryInterface;
 /**
  * プロダクト削除のインタラクタークラス
  */
-readonly final class DeleteProductUsecase implements DeleteProductUsecaseInterface {
+final readonly class DeleteProductUsecase implements DeleteProductUsecaseInterface
+{
     /**
      * コンストラクタ
      *
@@ -15,7 +16,8 @@ readonly final class DeleteProductUsecase implements DeleteProductUsecaseInterfa
      */
     public function __construct(
         private ProductRepositoryInterface $repository,
-    ) {}
+    ) {
+    }
 
     /**
      * プロダクトを削除する

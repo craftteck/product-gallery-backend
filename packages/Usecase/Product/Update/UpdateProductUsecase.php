@@ -9,7 +9,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * プロダクト更新のインタラクタークラス
  */
-readonly final class UpdateProductUsecase implements UpdateProductUsecaseInterface {
+final readonly class UpdateProductUsecase implements UpdateProductUsecaseInterface
+{
     /**
      * コンストラクタ
      *
@@ -17,7 +18,8 @@ readonly final class UpdateProductUsecase implements UpdateProductUsecaseInterfa
      */
     public function __construct(
         private ProductRepositoryInterface $repository,
-    ) {}
+    ) {
+    }
 
     /**
      * プロダクトを更新する
@@ -43,7 +45,8 @@ readonly final class UpdateProductUsecase implements UpdateProductUsecaseInterfa
      * @param UpdateProductUsecaseInput $usecaseInput
      * @return Product
      */
-    private function toEntiry(UpdateProductUsecaseInput $usecaseInput): Product {
+    private function toEntiry(UpdateProductUsecaseInput $usecaseInput): Product
+    {
         return new Product(
             id: $usecaseInput->id,
             userId: $usecaseInput->userId,
@@ -60,7 +63,8 @@ readonly final class UpdateProductUsecase implements UpdateProductUsecaseInterfa
      * @param Product $product
      * @return UpdateProductUsecaseOutput
      */
-    private function toUsecaseOutput(Product $product): UpdateProductUsecaseOutput {
+    private function toUsecaseOutput(Product $product): UpdateProductUsecaseOutput
+    {
         /** @var int $productId */
         $productId = $product->id;
 

@@ -20,7 +20,8 @@ class DeleteProductController extends Controller
      */
     public function __construct(
         private DeleteProductUsecaseInterface $usecase,
-    ) {}
+    ) {
+    }
 
     /**
      * プロダクトを削除する
@@ -29,7 +30,8 @@ class DeleteProductController extends Controller
      * @param DeleteProductRequest $request
      * @return Response
      */
-    public function delete(DeleteProductRequest $request): Response {
+    public function delete(DeleteProductRequest $request): Response
+    {
         $usecaseInput = $this->toUsecaseInput($request);
         $this->usecase->execute($usecaseInput);
         return response()->noContent();
@@ -41,7 +43,8 @@ class DeleteProductController extends Controller
      * @param DeleteProductRequest $request
      * @return DeleteProductUsecaseInput
      */
-    private function toUsecaseInput(DeleteProductRequest $request): DeleteProductUsecaseInput {
+    private function toUsecaseInput(DeleteProductRequest $request): DeleteProductUsecaseInput
+    {
         /** @var array<int> $ids */
         $ids = $request->input('ids');
         return new DeleteProductUsecaseInput(ids: $ids);

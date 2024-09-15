@@ -21,7 +21,8 @@ class ReadProductController extends Controller
      */
     public function __construct(
         private ReadProductUsecaseInterface $usecase,
-    ) {}
+    ) {
+    }
 
     /**
      * プロダクトを取得する
@@ -30,7 +31,8 @@ class ReadProductController extends Controller
      * @param ReadProductRequest $request
      * @return JsonResponse
      */
-    public function read(ReadProductRequest $request): JsonResponse {
+    public function read(ReadProductRequest $request): JsonResponse
+    {
         $usecaseInput = $this->toUsecaseInput($request);
         $usecaseOutput = $this->usecase->execute($usecaseInput);
         return $this->toResponse($usecaseOutput);
@@ -42,7 +44,8 @@ class ReadProductController extends Controller
      * @param ReadProductRequest $request
      * @return ReadProductUsecaseInput
      */
-    private function toUsecaseInput(ReadProductRequest $request): ReadProductUsecaseInput {
+    private function toUsecaseInput(ReadProductRequest $request): ReadProductUsecaseInput
+    {
         /** @var int $id */
         $id = $request->route('id');
         return new ReadProductUsecaseInput(id: $id);
@@ -54,7 +57,8 @@ class ReadProductController extends Controller
      * @param ReadProductUsecaseOutput $usecaseOutput
      * @return JsonResponse
      */
-    private function toResponse(ReadProductUsecaseOutput $usecaseOutput): JsonResponse {
+    private function toResponse(ReadProductUsecaseOutput $usecaseOutput): JsonResponse
+    {
         return response()->json(get_object_vars($usecaseOutput));
     }
 }

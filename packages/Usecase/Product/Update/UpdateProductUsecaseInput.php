@@ -5,7 +5,8 @@ namespace Packages\Usecase\Product\Update;
 /**
  * プロダクト更新のコマンドクラス
  */
-readonly final class UpdateProductUsecaseInput {
+final readonly class UpdateProductUsecaseInput
+{
     /**
      * @param int $id
      * @param int $userId
@@ -21,5 +22,6 @@ readonly final class UpdateProductUsecaseInput {
         public string $summary,
         public string $description,
         public string $url,
-    ) {}
+    ) {
+    }
 }

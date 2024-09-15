@@ -22,7 +22,8 @@ class UpdateProductController extends Controller
      */
     public function __construct(
         private UpdateProductUsecaseInterface $usecase,
-    ) {}
+    ) {
+    }
 
     /**
      * プロダクトを更新する
@@ -31,7 +32,8 @@ class UpdateProductController extends Controller
      * @param UpdateProductRequest $request
      * @return JsonResponse
      */
-    public function Update(UpdateProductRequest $request): JsonResponse {
+    public function Update(UpdateProductRequest $request): JsonResponse
+    {
         $usecaseInput = $this->toUsecaseInput($request);
         $usecaseOutput = $this->usecase->execute($usecaseInput);
         return $this->toResponse($usecaseOutput);
@@ -43,7 +45,8 @@ class UpdateProductController extends Controller
      * @param UpdateProductRequest $request
      * @return UpdateProductUsecaseInput
      */
-    private function toUsecaseInput(UpdateProductRequest $request): UpdateProductUsecaseInput {
+    private function toUsecaseInput(UpdateProductRequest $request): UpdateProductUsecaseInput
+    {
         /** @var int $id */
         $id = $request->route('id');
 
@@ -63,7 +66,8 @@ class UpdateProductController extends Controller
      * @param UpdateProductUsecaseOutput $usecaseOutput
      * @return JsonResponse
      */
-    private function toResponse(UpdateProductUsecaseOutput $usecaseOutput): JsonResponse {
+    private function toResponse(UpdateProductUsecaseOutput $usecaseOutput): JsonResponse
+    {
         return response()->json(get_object_vars($usecaseOutput));
     }
 }

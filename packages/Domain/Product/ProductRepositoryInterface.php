@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Collection;
 /**
  * プロダクトのリポジトリインターフェース
  */
-interface ProductRepositoryInterface {
+interface ProductRepositoryInterface
+{
     /**
      * プロダクトを取得する
      *

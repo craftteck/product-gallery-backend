@@ -5,6 +5,7 @@ namespace Packages\Usecase\Product\Create;
 /**
  * プロダクト作成のインタラクターインターフェース
  */
-interface CreateProductUsecaseInterface {
+interface CreateProductUsecaseInterface
+{
     public function execute(CreateProductUsecaseInput $usecaseInput): CreateProductUsecaseOutput;
 }
