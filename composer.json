@@ -51,7 +51,7 @@
             "@php artisan migrate --graceful --ansi"
         ],
         "check": [
-            "phpstan analyse",
+            "phpstan analyse --memory-limit=512M",
             "phpunit"
         ]
     },

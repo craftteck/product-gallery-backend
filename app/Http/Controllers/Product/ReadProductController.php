@@ -5,31 +5,56 @@ namespace App\Http\Controllers\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\ReadProductRequest;
 use Illuminate\Http\JsonResponse;
-use Packages\Usecase\Product\Read\ReadProductCommand;
-use Packages\Usecase\Product\Read\ReadProductDto;
-use Packages\Usecase\Product\Read\ReadProductInteractorInterface;
+use Packages\Usecase\Product\Read\ReadProductUsecaseInput;
+use Packages\Usecase\Product\Read\ReadProductUsecaseOutput;
+use Packages\Usecase\Product\Read\ReadProductUsecaseInterface;
 
+/**
+ * プロダクト取得のコントローラークラス
+ */
 class ReadProductController extends Controller
 {
+    /**
+     * コンストラクタ
+     *
+     * @param ReadProductUsecaseInterface $usecase
+     */
     public function __construct(
-        private ReadProductInteractorInterface $interactor,
+        private ReadProductUsecaseInterface $usecase,
     ) {}
 
-    // TODO: OpenAPIのリクエストスキーマと一致させる方法を検討
+    /**
+     * プロダクトを取得する
+     * TODO: OpenAPIのリクエストスキーマと一致させる方法を検討
+     *
+     * @param ReadProductRequest $request
+     * @return JsonResponse
+     */
     public function read(ReadProductRequest $request): JsonResponse {
-        $command = $this->toCommand($request);
-        $dto = $this->interactor->execute($command);
-        return $this->toResponse($dto);
+        $usecaseInput = $this->toUsecaseInput($request);
+        $usecaseOutput = $this->usecase->execute($usecaseInput);
+        return $this->toResponse($usecaseOutput);
     }
 
-    private function toCommand(ReadProductRequest $request): ReadProductCommand {
+    /**
+     * リクエストをコマンドクラスに変換する
+     *
+     * @param ReadProductRequest $request
+     * @return ReadProductUsecaseInput
+     */
+    private function toUsecaseInput(ReadProductRequest $request): ReadProductUsecaseInput {
+        /** @var int $id */
         $id = $request->route('id');
-        $castedId = is_numeric($id) ? (int) $id : abort(500);
-
-        return new ReadProductCommand(id: $castedId);
+        return new ReadProductUsecaseInput(id: $id);
     }
 
-    private function toResponse(ReadProductDto $dto): JsonResponse {
-        return response()->json(get_object_vars($dto));
+    /**
+     * DTOをレスポンスに変換する
+     *
+     * @param ReadProductUsecaseOutput $usecaseOutput
+     * @return JsonResponse
+     */
+    private function toResponse(ReadProductUsecaseOutput $usecaseOutput): JsonResponse {
+        return response()->json(get_object_vars($usecaseOutput));
     }
 }

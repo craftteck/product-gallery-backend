@@ -6,13 +6,28 @@ use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
 use App\Models\Product as Model;
 
+/**
+ * プロダクトのリポジトリクラス
+ */
 readonly final class ProductRepository implements ProductRepositoryInterface {
+    /**
+     * IDに該当するプロダクトを取得する
+     *
+     * @param int $id
+     * @return ?Product
+     */
     public function findById(int $id): ?Product
     {
         $record = Model::find($id);
         return $record ? $this->toEntity($record) : null;
     }
 
+    /**
+     * プロダクトを登録する
+     *
+     * @param Product $product
+     * @return Product
+     */
     public function insert(Product $product): Product
     {
         $record = Model::create([
@@ -25,27 +40,51 @@ readonly final class ProductRepository implements ProductRepositoryInterface {
         return $this->toEntity($record);
     }
 
-    // TODO: 自身のユーザーIDを持つプロダクト以外は更新不可にする仕組みを検討
-    // TODO: 楽観ロックの仕組みを追加
+
+    /**
+     * プロダクトを更新する
+     * TODO: 自身のユーザーIDを持つプロダクト以外は更新不可にする仕組みを検討
+     * TODO: 楽観ロックの仕組みを追加
+     *
+     * @param Product $product
+     * @return Product
+     */
     public function update(Product $product): Product
     {
-        Model::find($product->id)->update([
+        /** @var Model $target */
+        $target = Model::find($product->id);
+
+        $target->update([
             'name' => $product->name,
             'summary' => $product->summary,
             'description' => $product->description,
             'url' => $product->url,
         ]);
+
+        /** @var Model $updated */
         $updated = Model::find($product->id);
+
         return $this->toEntity($updated);
     }
 
-    // TODO: 自身のユーザーIDを持つプロダクト以外は更新不可にする仕組みを検討
+    /**
+     * プロダクトを削除する
+     * TODO: 自身のユーザーIDを持つプロダクト以外は更新不可にする仕組みを検討
+     *
+     * @param array<int> $ids
+     */
     public function delete(array $ids): void
     {
         Model::whereIn('id', $ids)->delete();
     }
 
-    private function toEntity(object $record): Product {
+    /**
+     * モデルオブジェクトをエンティティに変換する
+     *
+     * @param Model $record
+     * @return Product
+     */
+    private function toEntity(Model $record): Product {
         return new Product(
             id: $record->id,
             userId: $record->user_id,

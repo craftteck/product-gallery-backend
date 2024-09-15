@@ -5,19 +5,19 @@ namespace Tests\Unit\Product;
 use Mockery;
 use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
-use Packages\Usecase\Product\Create\CreateProductCommand;
-use Packages\Usecase\Product\Create\CreateProductDto;
-use Packages\Usecase\Product\Create\CreateProductInteractor;
+use Packages\Usecase\Product\Create\CreateProductUsecaseInput;
+use Packages\Usecase\Product\Create\CreateProductUsecaseOutput;
+use Packages\Usecase\Product\Create\CreateProductUsecase;
 use PHPUnit\Framework\TestCase;
 
-class CreateProductInteractorTest extends TestCase
+class CreateProductUsecaseTest extends TestCase
 {
     /**
      * プロダクトの登録処理実行
      */
     public function test_execute(): void
     {
-        $command = new CreateProductCommand(
+        $usecaseInput = new CreateProductUsecaseInput(
             userId: 1,
             name: 'name',
             summary: 'summary',
@@ -50,10 +50,10 @@ class CreateProductInteractorTest extends TestCase
                 )
             );
 
-        $interactor = new CreateProductInteractor($repository);
-        $result = $interactor->execute($command);
+        $usecase = new CreateProductUsecase($repository);
+        $result = $usecase->execute($usecaseInput);
 
-        $expected = new CreateProductDto(
+        $expected = new CreateProductUsecaseOutput(
             id: 1,
             userId: 1,
             name: 'name',

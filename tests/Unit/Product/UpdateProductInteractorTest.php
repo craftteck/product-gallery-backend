@@ -5,20 +5,20 @@ namespace Tests\Unit\Product;
 use Mockery;
 use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
-use Packages\Usecase\Product\Update\UpdateProductCommand;
-use Packages\Usecase\Product\Update\UpdateProductDto;
-use Packages\Usecase\Product\Update\UpdateProductInteractor;
+use Packages\Usecase\Product\Update\UpdateProductUsecaseInput;
+use Packages\Usecase\Product\Update\UpdateProductUsecaseOutput;
+use Packages\Usecase\Product\Update\UpdateProductUsecase;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class UpdateProductInteractorTest extends TestCase
+class UpdateProductUsecaseTest extends TestCase
 {
     /**
      * プロダクトの更新処理実行
      */
     public function test_execute(): void
     {
-        $command = new UpdateProductCommand(
+        $usecaseInput = new UpdateProductUsecaseInput(
             id: 1,
             userId: 1,
             name: 'updated name',
@@ -31,7 +31,7 @@ class UpdateProductInteractorTest extends TestCase
         $repository
             ->expects($this->once())
             ->method('findById')
-            ->with($this->equalTo($command->id))
+            ->with($this->equalTo($usecaseInput->id))
             ->willReturn(
                 new Product(
                     id: 1,
@@ -56,10 +56,10 @@ class UpdateProductInteractorTest extends TestCase
             ->with($updated)
             ->willReturn($updated);
 
-        $interactor = new UpdateProductInteractor($repository);
-        $result = $interactor->execute($command);
+        $usecase = new UpdateProductUsecase($repository);
+        $result = $usecase->execute($usecaseInput);
 
-        $expected = new UpdateProductDto(
+        $expected = new UpdateProductUsecaseOutput(
             id: 1,
             userId: 1,
             name: 'updated name',
@@ -75,7 +75,7 @@ class UpdateProductInteractorTest extends TestCase
      */
     public function test_target_resource_not_found(): void
     {
-        $command = new UpdateProductCommand(
+        $usecaseInput = new UpdateProductUsecaseInput(
             id: 1,
             userId: 1,
             name: 'updated name',
@@ -88,13 +88,13 @@ class UpdateProductInteractorTest extends TestCase
         $repository
             ->expects($this->once())
             ->method('findById')
-            ->with($this->equalTo($command->id))
+            ->with($this->equalTo($usecaseInput->id))
             ->willReturn(null);
-        
+
         $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('Target resource not found.');
 
-        $interactor = new UpdateProductInteractor($repository);
-        $interactor->execute($command);
+        $usecase = new UpdateProductUsecase($repository);
+        $usecase->execute($usecaseInput);
     }
 }

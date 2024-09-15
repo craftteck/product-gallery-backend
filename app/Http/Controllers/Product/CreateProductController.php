@@ -6,25 +6,45 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\CreateProductRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Packages\Usecase\Product\Create\CreateProductCommand;
-use Packages\Usecase\Product\Create\CreateProductDto;
-use Packages\Usecase\Product\Create\CreateProductInteractorInterface;
+use Packages\Usecase\Product\Create\CreateProductUsecaseInput;
+use Packages\Usecase\Product\Create\CreateProductUsecaseOutput;
+use Packages\Usecase\Product\Create\CreateProductUsecaseInterface;
 
+/**
+ * プロダクト新規作成のコントローラークラス
+ */
 class CreateProductController extends Controller
 {
+    /**
+     * コンストラクタ
+     *
+     * @param CreateProductUsecaseInterface $usecase
+     */
     public function __construct(
-        private CreateProductInteractorInterface $interactor,
+        private CreateProductUsecaseInterface $usecase,
     ) {}
 
-    // TODO: OpenAPIのリクエストスキーマと一致させる方法を検討
+    /**
+     * プロダクトを新規登録する
+     *
+     * @param CreateProductRequest $request
+     * @return JsonResponse
+     * TODO: OpenAPIのリクエストスキーマと一致させる方法を検討
+     */
     public function create(CreateProductRequest $request): JsonResponse {
-        $command = $this->toCommand($request);
-        $dto = $this->interactor->execute($command);
-        return $this->toResponse($dto);
+        $usecaseInput = $this->toUsecaseInput($request);
+        $usecaseOutput = $this->usecase->execute($usecaseInput);
+        return $this->toResponse($usecaseOutput);
     }
 
-    private function toCommand(CreateProductRequest $request): CreateProductCommand {
-        return new CreateProductCommand(
+    /**
+     * リクエストをコマンドクラスに変換する
+     *
+     * @param CreateProductRequest $request
+     * @return CreateProductUsecaseInput
+     */
+    private function toUsecaseInput(CreateProductRequest $request): CreateProductUsecaseInput {
+        return new CreateProductUsecaseInput(
             userId: (int) Auth::id(),
             name: $request->string('name'),
             summary: $request->string('summary'),
@@ -33,7 +53,13 @@ class CreateProductController extends Controller
         );
     }
 
-    private function toResponse(CreateProductDto $dto): JsonResponse {
-        return response()->json(get_object_vars($dto));
+    /**
+     * DTOをレスポンスに変換する
+     *
+     * @param CreateProductUsecaseOutput $usecaseOutput
+     * @return JsonResponse
+     */
+    private function toResponse(CreateProductUsecaseOutput $usecaseOutput): JsonResponse {
+        return response()->json(get_object_vars($usecaseOutput));
     }
 }

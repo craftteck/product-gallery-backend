@@ -2,7 +2,18 @@
 
 namespace Packages\Usecase\Product\Update;
 
-readonly final class UpdateProductDto {
+/**
+ * プロダクト更新のDTO
+ */
+readonly final class UpdateProductUsecaseOutput {
+    /**
+     * @param int $id
+     * @param int $userId
+     * @param string $name
+     * @param string $summary
+     * @param string $description
+     * @param string $url
+     */
     public function __construct(
         public int $id,
         public int $userId,

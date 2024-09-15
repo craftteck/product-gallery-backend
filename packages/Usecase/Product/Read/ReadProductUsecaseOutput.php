@@ -1,13 +1,15 @@
 <?php
 
-namespace Packages\Domain\Product;
+namespace Packages\Usecase\Product\Read;
 
 /**
- * プロダクト
+ * プロダクト取得のDTO
  */
-readonly final class Product {
+readonly final class ReadProductUsecaseOutput {
     /**
-     * @param ?int $id
+     * コンストラクタ
+     *
+     * @param int $id
      * @param int $userId
      * @param string $name
      * @param string $summary
@@ -15,7 +17,7 @@ readonly final class Product {
      * @param string $url
      */
     public function __construct(
-        public ?int $id,
+        public int $id,
         public int $userId,
         public string $name,
         public string $summary,

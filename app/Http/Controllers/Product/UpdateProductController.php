@@ -6,29 +6,49 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\UpdateProductRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Packages\Usecase\Product\Update\UpdateProductCommand;
-use Packages\Usecase\Product\Update\UpdateProductDto;
-use Packages\Usecase\Product\Update\UpdateProductInteractorInterface;
+use Packages\Usecase\Product\Update\UpdateProductUsecaseInput;
+use Packages\Usecase\Product\Update\UpdateProductUsecaseOutput;
+use Packages\Usecase\Product\Update\UpdateProductUsecaseInterface;
 
+/**
+ * プロダクト更新のコントローラークラス
+ */
 class UpdateProductController extends Controller
 {
+    /**
+     * コンストラクタ
+     *
+     * @param UpdateProductUsecaseInterface $usecase
+     */
     public function __construct(
-        private UpdateProductInteractorInterface $interactor,
+        private UpdateProductUsecaseInterface $usecase,
     ) {}
 
-    // TODO: OpenAPIのリクエストスキーマと一致させる方法を検討
+    /**
+     * プロダクトを更新する
+     * TODO: OpenAPIのリクエストスキーマと一致させる方法を検討
+     *
+     * @param UpdateProductRequest $request
+     * @return JsonResponse
+     */
     public function Update(UpdateProductRequest $request): JsonResponse {
-        $command = $this->toCommand($request);
-        $dto = $this->interactor->execute($command);
-        return $this->toResponse($dto);
+        $usecaseInput = $this->toUsecaseInput($request);
+        $usecaseOutput = $this->usecase->execute($usecaseInput);
+        return $this->toResponse($usecaseOutput);
     }
 
-    private function toCommand(UpdateProductRequest $request): UpdateProductCommand {
+    /**
+     * リクエストをコマンドクラスに変換する
+     *
+     * @param UpdateProductRequest $request
+     * @return UpdateProductUsecaseInput
+     */
+    private function toUsecaseInput(UpdateProductRequest $request): UpdateProductUsecaseInput {
+        /** @var int $id */
         $id = $request->route('id');
-        $castedId = is_numeric($id) ? (int) $id : abort(500);
 
-        return new UpdateProductCommand(
-            id: $castedId,
+        return new UpdateProductUsecaseInput(
+            id: $id,
             userId: (int) Auth::id(),
             name: $request->string('name'),
             summary: $request->string('summary'),
@@ -37,7 +57,13 @@ class UpdateProductController extends Controller
         );
     }
 
-    private function toResponse(UpdateProductDto $dto): JsonResponse {
-        return response()->json(get_object_vars($dto));
+    /**
+     * DTOをレスポンスに変換する
+     *
+     * @param UpdateProductUsecaseOutput $usecaseOutput
+     * @return JsonResponse
+     */
+    private function toResponse(UpdateProductUsecaseOutput $usecaseOutput): JsonResponse {
+        return response()->json(get_object_vars($usecaseOutput));
     }
 }

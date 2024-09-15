@@ -5,25 +5,25 @@ namespace Tests\Unit\Product;
 use Mockery;
 use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
-use Packages\Usecase\Product\Read\ReadProductCommand;
-use Packages\Usecase\Product\Read\ReadProductDto;
-use Packages\Usecase\Product\Read\ReadProductInteractor;
+use Packages\Usecase\Product\Read\ReadProductUsecaseInput;
+use Packages\Usecase\Product\Read\ReadProductUsecaseOutput;
+use Packages\Usecase\Product\Read\ReadProductUsecase;
 use PHPUnit\Framework\TestCase;
 
-class ReadProductInteractorTest extends TestCase
+class ReadProductUsecaseTest extends TestCase
 {
     /**
      * プロダクトの取得処理実行
      */
     public function test_execute(): void
     {
-        $command = new ReadProductCommand(id: 1);
+        $usecaseInput = new ReadProductUsecaseInput(id: 1);
 
         $repository = $this->createMock(ProductRepositoryInterface::class);
         $repository
             ->expects($this->once())
             ->method('findById')
-            ->with($this->equalTo($command->id))
+            ->with($this->equalTo($usecaseInput->id))
             ->willReturn(
                 new Product(
                     id: 1,
@@ -35,10 +35,10 @@ class ReadProductInteractorTest extends TestCase
                 )
             );
 
-        $interactor = new ReadProductInteractor($repository);
-        $result = $interactor->execute($command);
+        $usecase = new ReadProductUsecase($repository);
+        $result = $usecase->execute($usecaseInput);
 
-        $expected = new ReadProductDto(
+        $expected = new ReadProductUsecaseOutput(
             id: 1,
             userId: 1,
             name: 'name',
