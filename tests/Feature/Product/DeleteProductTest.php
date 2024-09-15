@@ -31,7 +31,7 @@ class DeleteProductTest extends TestCase
 
         $body = ['ids' => [1, 2]];
         $headers = ['Accept' => 'application/json'];
-        $response = $this->delete("/api/products", $body, $headers);
+        $response = $this->delete('/api/products', $body, $headers);
 
         $response->assertStatus(204);
 
@@ -68,9 +68,9 @@ class DeleteProductTest extends TestCase
 
         $response->assertStatus(422)->assertJson(
             [
-                "errors" => [
-                    "ids" => [
-                        "The ids field is required."
+                'errors' => [
+                    'ids' => [
+                        'The ids field is required.'
                     ],
                 ]
             ]

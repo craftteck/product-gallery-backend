@@ -2,12 +2,11 @@
 
 namespace Tests\Unit\Product;
 
-use Mockery;
 use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
+use Packages\Usecase\Product\Update\UpdateProductUsecase;
 use Packages\Usecase\Product\Update\UpdateProductUsecaseInput;
 use Packages\Usecase\Product\Update\UpdateProductUsecaseOutput;
-use Packages\Usecase\Product\Update\UpdateProductUsecase;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

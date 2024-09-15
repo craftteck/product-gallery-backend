@@ -72,15 +72,15 @@ class ReadProductTest extends TestCase
         $headers = ['Accept' => 'application/json'];
 
         // パスパラメータが不正
-        $response = $this->get("/api/products/abc", $headers);
+        $response = $this->get('/api/products/abc', $headers);
         $response->assertStatus(404)->assertJson([
-            'message' => "The route api/products/abc could not be found.",
+            'message' => 'The route api/products/abc could not be found.',
         ]);
 
         // 指定されたパスパラメータのリソースが存在しない
-        $response = $this->get("/api/products/0", $headers);
+        $response = $this->get('/api/products/0', $headers);
         $response->assertStatus(404)->assertJson([
-            'message' => "Target resource not found.",
+            'message' => 'Target resource not found.',
         ]);
     }
 }

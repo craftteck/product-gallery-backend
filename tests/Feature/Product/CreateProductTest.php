@@ -89,18 +89,18 @@ class CreateProductTest extends TestCase
 
         $response->assertStatus(422)->assertJson(
             [
-                "errors" => [
-                    "name" => [
-                        "The name field is required."
+                'errors' => [
+                    'name' => [
+                        'The name field is required.'
                     ],
-                    "summary" => [
-                        "The summary field is required."
+                    'summary' => [
+                        'The summary field is required.'
                     ],
-                    "description" => [
-                        "The description field is required."
+                    'description' => [
+                        'The description field is required.'
                     ],
-                    "url" => [
-                        "The url field is required."
+                    'url' => [
+                        'The url field is required.'
                     ]
                 ]
             ]

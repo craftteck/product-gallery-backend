@@ -5,7 +5,6 @@ namespace Packages\Usecase\Product\Read;
 use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 /**
  * プロダクト取得のインタラクタークラス

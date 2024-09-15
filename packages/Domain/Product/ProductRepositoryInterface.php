@@ -2,8 +2,6 @@
 
 namespace Packages\Domain\Product;
 
-use Illuminate\Database\Eloquent\Collection;
-
 /**
  * プロダクトのリポジトリインターフェース
  */

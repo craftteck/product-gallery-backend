@@ -2,9 +2,9 @@
 
 namespace Packages\Infrastructure\Product;
 
+use App\Models\Product as Model;
 use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
-use App\Models\Product as Model;
 
 /**
  * プロダクトのリポジトリクラス

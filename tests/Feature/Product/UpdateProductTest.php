@@ -94,15 +94,15 @@ class UpdateProductTest extends TestCase
         ];
 
         // パスパラメータが不正
-        $response = $this->put("/api/products/abc", $body, $headers);
+        $response = $this->put('/api/products/abc', $body, $headers);
         $response->assertStatus(404)->assertJson([
-            'message' => "The route api/products/abc could not be found.",
+            'message' => 'The route api/products/abc could not be found.',
         ]);
 
         // 指定されたパスパラメータのリソースが存在しない
-        $response = $this->put("/api/products/0", $body, $headers);
+        $response = $this->put('/api/products/0', $body, $headers);
         $response->assertStatus(404)->assertJson([
-            'message' => "Target resource not found.",
+            'message' => 'Target resource not found.',
         ]);
     }
 
@@ -124,18 +124,18 @@ class UpdateProductTest extends TestCase
 
         $response->assertStatus(422)->assertJson(
             [
-                "errors" => [
-                    "name" => [
-                        "The name field is required."
+                'errors' => [
+                    'name' => [
+                        'The name field is required.'
                     ],
-                    "summary" => [
-                        "The summary field is required."
+                    'summary' => [
+                        'The summary field is required.'
                     ],
-                    "description" => [
-                        "The description field is required."
+                    'description' => [
+                        'The description field is required.'
                     ],
-                    "url" => [
-                        "The url field is required."
+                    'url' => [
+                        'The url field is required.'
                     ]
                 ]
             ]

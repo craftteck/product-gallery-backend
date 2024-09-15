@@ -2,12 +2,11 @@
 
 namespace Tests\Unit\Product;
 
-use Mockery;
 use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
+use Packages\Usecase\Product\Create\CreateProductUsecase;
 use Packages\Usecase\Product\Create\CreateProductUsecaseInput;
 use Packages\Usecase\Product\Create\CreateProductUsecaseOutput;
-use Packages\Usecase\Product\Create\CreateProductUsecase;
 use PHPUnit\Framework\TestCase;
 
 class CreateProductUsecaseTest extends TestCase

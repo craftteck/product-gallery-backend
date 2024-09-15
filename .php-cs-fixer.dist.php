@@ -9,6 +9,9 @@ return $config
     ->setRiskyAllowed(true)
     ->setRules([
         '@PSR12' => true,
+        'ordered_imports' => true,
+        'no_unused_imports' => true,
+        'single_quote' => true,
     ])
     ->setFinder(PhpCsFixer\Finder::create()
         ->exclude([

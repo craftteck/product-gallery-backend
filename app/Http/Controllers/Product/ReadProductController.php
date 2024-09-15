@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\ReadProductRequest;
 use Illuminate\Http\JsonResponse;
 use Packages\Usecase\Product\Read\ReadProductUsecaseInput;
-use Packages\Usecase\Product\Read\ReadProductUsecaseOutput;
 use Packages\Usecase\Product\Read\ReadProductUsecaseInterface;
+use Packages\Usecase\Product\Read\ReadProductUsecaseOutput;
 
 /**
  * プロダクト取得のコントローラークラス
