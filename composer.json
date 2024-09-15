@@ -53,7 +53,11 @@
         ],
         "check": [
             "phpstan analyse --memory-limit=512M",
+            "php-cs-fixer fix --dry-run",
             "phpunit"
+        ],
+        "format-fix": [
+            "php-cs-fixer fix"
         ]
     },
     "extra": {
