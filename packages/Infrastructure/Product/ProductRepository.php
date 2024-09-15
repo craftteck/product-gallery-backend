@@ -2,6 +2,7 @@
 
 namespace Packages\Infrastructure\Product;
 
+use App\Exceptions\OptimisticLockException;
 use App\Models\Product as Model;
 use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
@@ -37,10 +38,10 @@ final readonly class ProductRepository implements ProductRepositoryInterface
             'summary' => $product->summary,
             'description' => $product->description,
             'url' => $product->url,
+            'version' => 1,
         ]);
         return $this->toEntity($record);
     }
-
 
     /**
      * プロダクトを更新する
@@ -55,11 +56,16 @@ final readonly class ProductRepository implements ProductRepositoryInterface
         /** @var Model $target */
         $target = Model::find($product->id);
 
+        if ($target->version !== $product->version) {
+            throw new OptimisticLockException();
+        }
+
         $target->update([
             'name' => $product->name,
             'summary' => $product->summary,
             'description' => $product->description,
             'url' => $product->url,
+            'version' => $product->version + 1,
         ]);
 
         /** @var Model $updated */
@@ -94,6 +100,7 @@ final readonly class ProductRepository implements ProductRepositoryInterface
             summary: $record->summary,
             description: $record->description,
             url: $record->url,
+            version: $record->version,
         );
     }
 }

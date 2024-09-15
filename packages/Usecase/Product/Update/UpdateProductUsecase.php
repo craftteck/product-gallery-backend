@@ -54,6 +54,7 @@ final readonly class UpdateProductUsecase implements UpdateProductUsecaseInterfa
             summary: $usecaseInput->summary,
             description: $usecaseInput->description,
             url: $usecaseInput->url,
+            version: $usecaseInput->version,
         );
     }
 
@@ -67,6 +68,8 @@ final readonly class UpdateProductUsecase implements UpdateProductUsecaseInterfa
     {
         /** @var int $productId */
         $productId = $product->id;
+        /** @var int $version */
+        $version = $product->version;
 
         return new UpdateProductUsecaseOutput(
             id: $productId,
@@ -75,6 +78,7 @@ final readonly class UpdateProductUsecase implements UpdateProductUsecaseInterfa
             summary: $product->summary,
             description: $product->description,
             url: $product->url,
+            version: $version,
         );
     }
 }

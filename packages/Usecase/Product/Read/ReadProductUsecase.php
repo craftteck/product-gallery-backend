@@ -44,13 +44,19 @@ final readonly class ReadProductUsecase implements ReadProductUsecaseInterface
      */
     private function toUsecaseOutput(Product $product): ReadProductUsecaseOutput
     {
+        /** @var int $productId */
+        $productId = $product->id;
+        /** @var int $version */
+        $version = $product->version;
+
         return new ReadProductUsecaseOutput(
-            id: (int) $product->id,
+            id: $productId,
             userId: $product->userId,
             name: $product->name,
             summary: $product->summary,
             description: $product->description,
             url: $product->url,
+            version: $version,
         );
     }
 }

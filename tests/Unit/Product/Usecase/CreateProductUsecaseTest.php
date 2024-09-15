@@ -36,6 +36,7 @@ class CreateProductUsecaseTest extends TestCase
                     summary: 'summary',
                     description: 'description',
                     url: 'url',
+                    version: null,
                 )
             ))
             ->willReturn(
@@ -46,6 +47,7 @@ class CreateProductUsecaseTest extends TestCase
                     summary: 'summary',
                     description: 'description',
                     url: 'url',
+                    version: 1,
                 )
             );
 
@@ -59,6 +61,7 @@ class CreateProductUsecaseTest extends TestCase
             summary: 'summary',
             description: 'description',
             url: 'url',
+            version: 1,
         );
         $this->assertEquals($expected, $result);
     }

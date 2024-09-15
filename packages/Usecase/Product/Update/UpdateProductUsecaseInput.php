@@ -14,6 +14,7 @@ final readonly class UpdateProductUsecaseInput
      * @param string $summary
      * @param string $description
      * @param string $url
+     * @param int $version
      */
     public function __construct(
         public int $id,
@@ -22,6 +23,7 @@ final readonly class UpdateProductUsecaseInput
         public string $summary,
         public string $description,
         public string $url,
+        public int $version,
     ) {
     }
 }

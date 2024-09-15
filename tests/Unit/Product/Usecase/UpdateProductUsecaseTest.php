@@ -24,6 +24,7 @@ class UpdateProductUsecaseTest extends TestCase
             summary: 'updated summary',
             description: 'updated description',
             url: 'updated url',
+            version: 2,
         );
 
         $repository = $this->createMock(ProductRepositoryInterface::class);
@@ -39,6 +40,7 @@ class UpdateProductUsecaseTest extends TestCase
                     summary: 'summary',
                     description: 'description',
                     url: 'url',
+                    version: 1,
                 )
             );
         $updated = new Product(
@@ -48,6 +50,7 @@ class UpdateProductUsecaseTest extends TestCase
             summary: 'updated summary',
             description: 'updated description',
             url: 'updated url',
+            version: 2,
         );
         $repository
             ->expects($this->once())
@@ -65,6 +68,7 @@ class UpdateProductUsecaseTest extends TestCase
             summary: 'updated summary',
             description: 'updated description',
             url: 'updated url',
+            version: 2,
         );
         $this->assertEquals($expected, $result);
     }
@@ -81,6 +85,7 @@ class UpdateProductUsecaseTest extends TestCase
             summary: 'updated summary',
             description: 'updated description',
             url: 'updated url',
+            version: 2,
         );
 
         $repository = $this->createMock(ProductRepositoryInterface::class);

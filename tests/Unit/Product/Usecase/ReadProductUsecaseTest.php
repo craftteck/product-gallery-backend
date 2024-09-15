@@ -31,6 +31,7 @@ class ReadProductUsecaseTest extends TestCase
                     summary: 'summary',
                     description: 'description',
                     url: 'url',
+                    version: 1,
                 )
             );
 
@@ -44,6 +45,7 @@ class ReadProductUsecaseTest extends TestCase
             summary: 'summary',
             description: 'description',
             url: 'url',
+            version: 1,
         );
         $this->assertEquals($expected, $result);
     }

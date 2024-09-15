@@ -28,6 +28,7 @@ class UpdateProductRequest extends FormRequest
             'summary' => 'required',
             'description' => 'required',
             'url' => 'required',
+            'version' => 'required'
         ];
     }
 }

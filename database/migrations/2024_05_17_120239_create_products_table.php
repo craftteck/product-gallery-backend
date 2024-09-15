@@ -11,12 +11,15 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('name');
-            $table->string('summary');
-            $table->string('description');
-            $table->string('url');
+            $table->comment('プロダクト');
+
+            $table->id()->comment('ID');
+            $table->foreignId('user_id')->comment('ユーザーID')->constrained()->cascadeOnDelete();
+            $table->string('name')->comment('プロダクト名');
+            $table->string('summary')->comment('プロダクト概要');
+            $table->string('description')->comment('プロダクト説明');
+            $table->string('url')->comment('プロダクトURL');
+            $table->integer('version')->comment('バージョン');
             $table->timestamps();
         });
     }

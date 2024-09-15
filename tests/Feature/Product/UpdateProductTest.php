@@ -27,7 +27,7 @@ class UpdateProductTest extends TestCase
     }
 
     /**
-     * 200
+     * 200 更新成功
      */
     public function test_200(): void
     {
@@ -38,6 +38,7 @@ class UpdateProductTest extends TestCase
             'summary' => 'summary',
             'description' => 'description',
             'url' => 'url',
+            'version' => 1,
         ];
         $headers = ['Accept' => 'application/json'];
         $response = $this->put("/api/products/{$this->product->id}", $body, $headers);
@@ -47,6 +48,7 @@ class UpdateProductTest extends TestCase
             'summary' => 'summary',
             'description' => 'description',
             'url' => 'url',
+            'version' => 2,
         ]);
 
         $this->assertDatabaseHas('products', [
@@ -56,11 +58,12 @@ class UpdateProductTest extends TestCase
             'summary' => 'summary',
             'description' => 'description',
             'url' => 'url',
+            'version' => 2,
         ]);
     }
 
     /**
-     * 401
+     * 401 認証エラー
      */
     public function test_401(): void
     {
@@ -69,6 +72,7 @@ class UpdateProductTest extends TestCase
             'summary' => 'summary',
             'description' => 'description',
             'url' => 'url',
+            'version' => 1,
         ];
         $headers = ['Accept' => 'application/json'];
         $response = $this->put("/api/products/{$this->product->id}", $body, $headers);
@@ -80,6 +84,8 @@ class UpdateProductTest extends TestCase
 
     /**
      * 404
+     * - URLが不正
+     * - リソースが存在しない
      */
     public function test_404(): void
     {
@@ -91,6 +97,7 @@ class UpdateProductTest extends TestCase
             'summary' => 'summary',
             'description' => 'description',
             'url' => 'url',
+            'version' => 1,
         ];
 
         // パスパラメータが不正
@@ -107,7 +114,29 @@ class UpdateProductTest extends TestCase
     }
 
     /**
-     * 422
+     * 409 楽観ロックエラー
+     */
+    public function test_409(): void
+    {
+        $this->actingAs($this->user, 'web');
+
+        $body = [
+            'name' => 'name',
+            'summary' => 'summary',
+            'description' => 'description',
+            'url' => 'url',
+            'version' => 99,
+        ];
+        $headers = ['Accept' => 'application/json'];
+        $response = $this->put("/api/products/{$this->product->id}", $body, $headers);
+
+        $response->assertStatus(409)->assertJson([
+            'message' => 'The record has been modified by another process.',
+        ]);
+    }
+
+    /**
+     * 422 パラメータエラー
      */
     public function test_422(): void
     {
@@ -118,6 +147,7 @@ class UpdateProductTest extends TestCase
             'summary' => null,
             'description' => null,
             'url' => null,
+            'version' => null,
         ];
         $headers = ['Accept' => 'application/json'];
         $response = $this->put("/api/products/{$this->product->id}", $body, $headers);
@@ -136,6 +166,9 @@ class UpdateProductTest extends TestCase
                     ],
                     'url' => [
                         'The url field is required.'
+                    ],
+                    'version' => [
+                        'The version field is required.'
                     ]
                 ]
             ]

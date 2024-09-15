@@ -57,6 +57,7 @@ class UpdateProductController extends Controller
             summary: $request->string('summary'),
             description: $request->string('description'),
             url: $request->string('url'),
+            version: $request->integer('version'),
         );
     }
 

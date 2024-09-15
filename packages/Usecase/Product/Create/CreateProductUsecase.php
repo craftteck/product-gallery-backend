@@ -47,6 +47,7 @@ final readonly class CreateProductUsecase implements CreateProductUsecaseInterfa
             summary: $usecaseInput->summary,
             description: $usecaseInput->description,
             url: $usecaseInput->url,
+            version: null,
         );
     }
 
@@ -60,6 +61,8 @@ final readonly class CreateProductUsecase implements CreateProductUsecaseInterfa
     {
         /** @var int $productId */
         $productId = $product->id;
+        /** @var int $version */
+        $version = $product->version;
 
         return new CreateProductUsecaseOutput(
             id: $productId,
@@ -68,6 +71,7 @@ final readonly class CreateProductUsecase implements CreateProductUsecaseInterfa
             summary: $product->summary,
             description: $product->description,
             url: $product->url,
+            version: $version,
         );
     }
 }

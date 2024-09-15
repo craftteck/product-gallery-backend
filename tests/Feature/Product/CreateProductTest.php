@@ -40,6 +40,7 @@ class CreateProductTest extends TestCase
             'summary' => 'summary',
             'description' => 'description',
             'url' => 'url',
+            'version' => 1,
         ]);
 
         $this->assertDatabaseHas('products', [
@@ -49,6 +50,7 @@ class CreateProductTest extends TestCase
             'summary' => 'summary',
             'description' => 'description',
             'url' => 'url',
+            'version' => 1,
         ]);
     }
 
