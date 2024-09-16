@@ -51,6 +51,7 @@ class CreateProductUsecaseTest extends TestCase
                 )
             );
 
+        /** @var ProductRepositoryInterface&\PHPUnit\Framework\MockObject\MockObject $repository */
         $usecase = new CreateProductUsecase($repository);
         $result = $usecase->execute($usecaseInput);
 

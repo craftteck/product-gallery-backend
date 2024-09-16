@@ -58,6 +58,7 @@ class UpdateProductUsecaseTest extends TestCase
             ->with($updated)
             ->willReturn($updated);
 
+        /** @var ProductRepositoryInterface&\PHPUnit\Framework\MockObject\MockObject $repository */
         $usecase = new UpdateProductUsecase($repository);
         $result = $usecase->execute($usecaseInput);
 
@@ -88,6 +89,7 @@ class UpdateProductUsecaseTest extends TestCase
             version: 2,
         );
 
+        /** @var ProductRepositoryInterface&\PHPUnit\Framework\MockObject\MockObject $repository */
         $repository = $this->createMock(ProductRepositoryInterface::class);
         $repository
             ->expects($this->once())
