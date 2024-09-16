@@ -26,4 +26,15 @@ class DeleteProductRequest extends FormRequest
             'ids.*' => 'integer|distinct',
         ];
     }
+
+    /**
+     * @return array<string,string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'ids' => 'IDのリスト',
+            'ids.*' => 'ID',
+        ];
+    }
 }

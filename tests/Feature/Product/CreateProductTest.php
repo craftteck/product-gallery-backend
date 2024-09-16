@@ -93,16 +93,16 @@ class CreateProductTest extends TestCase
             [
                 'errors' => [
                     'name' => [
-                        'The name field is required.'
+                        'プロダクト名 は必須です。'
                     ],
                     'summary' => [
-                        'The summary field is required.'
+                        '概要 は必須です。'
                     ],
                     'description' => [
-                        'The description field is required.'
+                        '説明 は必須です。'
                     ],
                     'url' => [
-                        'The url field is required.'
+                        'URL は必須です。'
                     ]
                 ]
             ]

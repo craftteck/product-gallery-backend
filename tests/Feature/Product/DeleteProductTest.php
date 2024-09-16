@@ -70,7 +70,7 @@ class DeleteProductTest extends TestCase
             [
                 'errors' => [
                     'ids' => [
-                        'The ids field is required.'
+                        'IDのリスト は必須です。'
                     ],
                 ]
             ]

@@ -30,4 +30,18 @@ class UpdateProductRequest extends FormRequest
             'version' => 'required|integer'
         ];
     }
+
+    /**
+     * @return array<string,string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'name' => 'プロダクト名',
+            'summary' => '概要',
+            'description' => '説明',
+            'url' => 'URL',
+            'version' => 'バージョン'
+        ];
+    }
 }
