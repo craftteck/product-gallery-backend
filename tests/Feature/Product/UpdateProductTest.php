@@ -37,7 +37,7 @@ class UpdateProductTest extends TestCase
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
-            'url' => 'url',
+            'url' => 'http://example.com',
             'version' => 1,
         ];
         $headers = ['Accept' => 'application/json'];
@@ -47,7 +47,7 @@ class UpdateProductTest extends TestCase
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
-            'url' => 'url',
+            'url' => 'http://example.com',
             'version' => 2,
         ]);
 
@@ -57,7 +57,7 @@ class UpdateProductTest extends TestCase
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
-            'url' => 'url',
+            'url' => 'http://example.com',
             'version' => 2,
         ]);
     }
@@ -71,7 +71,7 @@ class UpdateProductTest extends TestCase
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
-            'url' => 'url',
+            'url' => 'http://example.com',
             'version' => 1,
         ];
         $headers = ['Accept' => 'application/json'];
@@ -96,7 +96,7 @@ class UpdateProductTest extends TestCase
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
-            'url' => 'url',
+            'url' => 'http://example.com',
             'version' => 1,
         ];
 
@@ -124,7 +124,7 @@ class UpdateProductTest extends TestCase
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
-            'url' => 'url',
+            'url' => 'http://example.com',
             'version' => 99,
         ];
         $headers = ['Accept' => 'application/json'];

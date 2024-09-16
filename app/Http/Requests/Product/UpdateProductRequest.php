@@ -21,14 +21,13 @@ class UpdateProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        // TODO: バリデーションは別途検討（文字数上限など）
         // TODO: バリデーションのテスト
         return [
-            'name' => 'required',
-            'summary' => 'required',
-            'description' => 'required',
-            'url' => 'required',
-            'version' => 'required'
+            'name' => 'required|string|max:100',
+            'summary' => 'required|string|max:300',
+            'description' => 'required|string|max:2000',
+            'url' => 'required|url',
+            'version' => 'required|integer'
         ];
     }
 }

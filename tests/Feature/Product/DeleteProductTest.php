@@ -23,7 +23,7 @@ class DeleteProductTest extends TestCase
     }
 
     /**
-     * 204
+     * 204 削除成功
      */
     public function test_204(): void
     {
@@ -42,7 +42,7 @@ class DeleteProductTest extends TestCase
     }
 
     /**
-     * 401
+     * 401 認証エラー
      */
     public function test_401(): void
     {
@@ -56,7 +56,7 @@ class DeleteProductTest extends TestCase
     }
 
     /**
-     * 422
+     * 422 パラメーターエラー
      */
     public function test_422(): void
     {
@@ -76,6 +76,4 @@ class DeleteProductTest extends TestCase
             ]
         );
     }
-
-
 }

@@ -30,7 +30,7 @@ class ReadProductTest extends TestCase
     }
 
     /**
-     * 200
+     * 200 取得成功
      */
     public function test_200(): void
     {
@@ -50,7 +50,7 @@ class ReadProductTest extends TestCase
     }
 
     /**
-     * 401エラー
+     * 401 認証エラー
      */
     public function test_401(): void
     {
@@ -63,7 +63,9 @@ class ReadProductTest extends TestCase
     }
 
     /**
-     * 404エラー
+     * 404
+     * - URLが不正
+     * - 対象リソースが存在しない
      */
     public function test_404(): void
     {

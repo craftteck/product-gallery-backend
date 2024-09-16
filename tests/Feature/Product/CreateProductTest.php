@@ -20,7 +20,7 @@ class CreateProductTest extends TestCase
     }
 
     /**
-     * 200
+     * 200 作成成功
      */
     public function test_200(): void
     {
@@ -30,7 +30,7 @@ class CreateProductTest extends TestCase
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
-            'url' => 'url',
+            'url' => 'http://example.com',
         ];
         $headers = ['Accept' => 'application/json'];
         $response = $this->post('/api/products', $body, $headers);
@@ -39,7 +39,7 @@ class CreateProductTest extends TestCase
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
-            'url' => 'url',
+            'url' => 'http://example.com',
             'version' => 1,
         ]);
 
@@ -49,13 +49,13 @@ class CreateProductTest extends TestCase
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
-            'url' => 'url',
+            'url' => 'http://example.com',
             'version' => 1,
         ]);
     }
 
     /**
-     * 401
+     * 401 認証エラー
      */
     public function test_401(): void
     {
@@ -63,7 +63,7 @@ class CreateProductTest extends TestCase
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
-            'url' => 'url',
+            'url' => 'http://example.com',
         ];
         $headers = ['Accept' => 'application/json'];
         $response = $this->post('/api/products', $body, $headers);
@@ -74,7 +74,7 @@ class CreateProductTest extends TestCase
     }
 
     /**
-     * 422
+     * 422 パラメーターエラー
      */
     public function test_422(): void
     {
