@@ -1,26 +1,33 @@
 <?php
 
-use App\Http\Requests\Product\CreateProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
-class CreateProductRequestTest extends TestCase
+class UpdateProductRequestTest extends TestCase
 {
     /**
-     * バリデーション成功
+     * バリデーション通過
      */
     public function test_success_all(): void
     {
-        $request = Request::create('/api/products', 'GET', [
+        $request = Request::create('/api/products/1', 'PUT', [
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
             'url' => 'http://example.com',
+            'version' => 2,
         ]);
 
-        $validator = Validator::make($request->all(), (new CreateProductRequest())->rules());
+        $formRequest = new UpdateProductRequest();
+        $validator = Validator::make(
+            $request->all(),
+            $formRequest->rules(),
+            $formRequest->messages(),
+            $formRequest->attributes(),
+        );
 
         try {
             $validator->validate();
@@ -35,14 +42,15 @@ class CreateProductRequestTest extends TestCase
      */
     public function test_fails_required_rule(): void
     {
-        $request = Request::create('/api/products', 'GET', [
+        $request = Request::create('/api/products/1', 'PUT', [
             'name' => null,
             'summary' => null,
             'description' => null,
             'url' => null,
+            'version' => null,
         ]);
 
-        $formRequest = new CreateProductRequest();
+        $formRequest = new UpdateProductRequest();
         $validator = Validator::make(
             $request->all(),
             $formRequest->rules(),
@@ -67,6 +75,9 @@ class CreateProductRequestTest extends TestCase
             $this->assertArrayHasKey('url', $errors);
             $this->assertContains('URL は必須です。', $errors['url']);
 
+            $this->assertArrayHasKey('version', $errors);
+            $this->assertContains('バージョン は必須です。', $errors['version']);
+
             return;
         }
 
@@ -78,14 +89,15 @@ class CreateProductRequestTest extends TestCase
      */
     public function test_fails_string_rule(): void
     {
-        $request = Request::create('/api/products', 'GET', [
+        $request = Request::create('/api/products/1', 'PUT', [
             'name' => 0,
             'summary' => 0,
             'description' => 0,
             'url' => 'http://example.com',
+            'version' => 2
         ]);
 
-        $formRequest = new CreateProductRequest();
+        $formRequest = new UpdateProductRequest();
         $validator = Validator::make(
             $request->all(),
             $formRequest->rules(),
@@ -108,6 +120,47 @@ class CreateProductRequestTest extends TestCase
             $this->assertContains('説明 は文字列である必要があります。', $errors['description']);
 
             $this->assertArrayNotHasKey('url', $errors);
+            $this->assertArrayNotHasKey('version', $errors);
+
+            return;
+        }
+
+        $this->fail('ValidationException was not thrown.');
+    }
+
+    /**
+     * integer エラーの検証
+     */
+    public function test_fails_integer_rule(): void
+    {
+        $request = Request::create('/api/products/1', 'PUT', [
+            'name' => 'name',
+            'summary' => 'summary',
+            'description' => 'description',
+            'url' => 'http://example.com',
+            'version' => 'version',
+        ]);
+
+        $formRequest = new UpdateProductRequest();
+        $validator = Validator::make(
+            $request->all(),
+            $formRequest->rules(),
+            $formRequest->messages(),
+            $formRequest->attributes(),
+        );
+
+        try {
+            $validator->validate();
+        } catch (ValidationException $e) {
+            $errors = $e->errors();
+
+            $this->assertArrayNotHasKey('name', $errors);
+            $this->assertArrayNotHasKey('summary', $errors);
+            $this->assertArrayNotHasKey('description', $errors);
+            $this->assertArrayNotHasKey('url', $errors);
+
+            $this->assertArrayHasKey('version', $errors);
+            $this->assertContains('バージョン は整数である必要があります。', $errors['version']);
 
             return;
         }
@@ -120,14 +173,15 @@ class CreateProductRequestTest extends TestCase
      */
     public function test_fails_url_ruls(): void
     {
-        $request = Request::create('/api/products', 'GET', [
+        $request = Request::create('/api/products/1', 'PUT', [
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
             'url' => 'not url',
+            'version' => 2,
         ]);
 
-        $formRequest = new CreateProductRequest();
+        $formRequest = new UpdateProductRequest();
         $validator = Validator::make(
             $request->all(),
             $formRequest->rules(),
@@ -147,6 +201,8 @@ class CreateProductRequestTest extends TestCase
             $this->assertArrayHasKey('url', $errors);
             $this->assertContains('URL は有効なURLである必要があります。', $errors['url']);
 
+            $this->assertArrayNotHasKey('version', $errors);
+
             return;
         }
 
@@ -158,14 +214,15 @@ class CreateProductRequestTest extends TestCase
      */
     public function test_fails_max_rule(): void
     {
-        $request = Request::create('/api/products', 'GET', [
+        $request = Request::create('/api/products/1', 'PUT', [
             'name' => str_repeat('A', 101),
             'summary' => str_repeat('A', 301),
             'description' => str_repeat('A', 2001),
             'url' => 'http://example.com',
+            'version' => 2,
         ]);
 
-        $formRequest = new CreateProductRequest();
+        $formRequest = new UpdateProductRequest();
         $validator = Validator::make(
             $request->all(),
             $formRequest->rules(),
@@ -188,6 +245,7 @@ class CreateProductRequestTest extends TestCase
             $this->assertContains('説明 は 2000 文字以下である必要があります。', $errors['description']);
 
             $this->assertArrayNotHasKey('url', $errors);
+            $this->assertArrayNotHasKey('version', $errors);
 
             return;
         }

@@ -23,7 +23,7 @@ class DeleteProductRequest extends FormRequest
     {
         return [
             'ids' => 'required|array',
-            'ids.*' => 'integer|distinct',
+            'ids.*' => 'integer',
         ];
     }
 
