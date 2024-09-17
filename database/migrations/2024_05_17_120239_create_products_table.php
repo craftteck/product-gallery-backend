@@ -15,9 +15,9 @@ return new class () extends Migration {
 
             $table->id()->comment('ID');
             $table->foreignId('user_id')->comment('ユーザーID')->constrained()->cascadeOnDelete();
-            $table->string('name')->comment('プロダクト名');
-            $table->string('summary')->comment('プロダクト概要');
-            $table->string('description')->comment('プロダクト説明');
+            $table->string('name', 100)->comment('プロダクト名');
+            $table->string('summary', 300)->comment('プロダクト概要');
+            $table->string('description', 5000)->comment('プロダクト説明');
             $table->string('url')->comment('プロダクトURL');
             $table->integer('version')->comment('バージョン');
             $table->timestamps();
