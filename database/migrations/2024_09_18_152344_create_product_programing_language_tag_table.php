@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reviews', function (Blueprint $table) {
-            $table->comment('レビュー');
+        Schema::create('product_programing_language_tag', function (Blueprint $table) {
+            $table->comment('プロダクト - プログラミング言語タグ');
 
             $table->id();
-            $table->foreignId('user_id')->comment('ユーザーID')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->comment('プロダクトID')->constrained()->cascadeOnDelete();
-            $table->smallInteger('rating')->comment('評価');
-            $table->string('comment', 5000)->comment('コメント');
+            $table->foreignId('programing_language_tag_id')->comment('プログラミング言語タグID')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('product_programing_language_tag');
     }
 };
