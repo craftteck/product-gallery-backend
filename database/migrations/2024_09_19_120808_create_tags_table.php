@@ -4,18 +4,18 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('cloud_service_tags', function (Blueprint $table) {
-            $table->comment('クラウドサービスのタグ');
+        Schema::create('tags', function (Blueprint $table) {
+            $table->comment('タグ');
 
             $table->id();
-            $table->string('name', 50)->unique();
+            $table->string('name', 50)->comment('タグ名');
+            $table->integer('type')->comment('タグ種別');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cloud_service_tags');
+        Schema::dropIfExists('tags');
     }
 };
