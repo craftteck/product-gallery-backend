@@ -17,6 +17,7 @@ return new class () extends Migration {
             $table->foreignId('product_id')->comment('プロダクトID')->constrained()->cascadeOnDelete();
             $table->foreignId('tag_id')->comment('タグID')->constrained()->cascadeOnDelete();
             $table->integer('order')->comment('表示順序');
+            $table->integer('version')->comment('バージョン');
             $table->timestamps();
 
             $table->unique(['product_id', 'tag_id']);

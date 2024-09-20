@@ -16,6 +16,7 @@ return new class () extends Migration {
             $table->id();
             $table->string('name', 50)->comment('タグ名');
             $table->integer('type')->comment('タグ種別');
+            $table->integer('version')->comment('バージョン');
             $table->timestamps();
         });
     }

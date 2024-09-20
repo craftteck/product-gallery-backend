@@ -3,8 +3,8 @@
 namespace Packages\Infrastructure\Product;
 
 use App\Exceptions\OptimisticLockException;
-use App\Models\Product as Model;
-use Packages\Domain\Product\Product;
+use App\Models\Product;
+use Packages\Domain\Product\Product as ProductEntity;
 use Packages\Domain\Product\ProductRepositoryInterface;
 
 /**
@@ -16,23 +16,23 @@ final readonly class ProductRepository implements ProductRepositoryInterface
      * IDに該当するプロダクトを取得する
      *
      * @param int $id
-     * @return ?Product
+     * @return ?ProductEntity
      */
-    public function findById(int $id): ?Product
+    public function findById(int $id): ?ProductEntity
     {
-        $record = Model::find($id);
+        $record = Product::find($id);
         return $record ? $this->toEntity($record) : null;
     }
 
     /**
      * プロダクトを登録する
      *
-     * @param Product $product
-     * @return Product
+     * @param ProductEntity $product
+     * @return ProductEntity
      */
-    public function insert(Product $product): Product
+    public function insert(ProductEntity $product): ProductEntity
     {
-        $record = Model::create([
+        $record = Product::create([
             'user_id' => $product->userId,
             'name' => $product->name,
             'summary' => $product->summary,
@@ -48,13 +48,13 @@ final readonly class ProductRepository implements ProductRepositoryInterface
      * TODO: 自身のユーザーIDを持つプロダクト以外は更新不可にする仕組みを検討
      * TODO: 楽観ロックの仕組みを追加
      *
-     * @param Product $product
-     * @return Product
+     * @param ProductEntity $product
+     * @return ProductEntity
      */
-    public function update(Product $product): Product
+    public function update(ProductEntity $product): ProductEntity
     {
-        /** @var Model $target */
-        $target = Model::find($product->id);
+        /** @var Product $target */
+        $target = Product::find($product->id);
 
         if ($target->version !== $product->version) {
             throw new OptimisticLockException();
@@ -68,8 +68,8 @@ final readonly class ProductRepository implements ProductRepositoryInterface
             'version' => $product->version + 1,
         ]);
 
-        /** @var Model $updated */
-        $updated = Model::find($product->id);
+        /** @var Product $updated */
+        $updated = Product::find($product->id);
 
         return $this->toEntity($updated);
     }
@@ -82,18 +82,18 @@ final readonly class ProductRepository implements ProductRepositoryInterface
      */
     public function delete(array $ids): void
     {
-        Model::whereIn('id', $ids)->delete();
+        Product::whereIn('id', $ids)->delete();
     }
 
     /**
      * モデルオブジェクトをエンティティに変換する
      *
-     * @param Model $record
-     * @return Product
+     * @param Product $record
+     * @return ProductEntity
      */
-    private function toEntity(Model $record): Product
+    private function toEntity(Product $record): ProductEntity
     {
-        return new Product(
+        return new ProductEntity(
             id: $record->id,
             userId: $record->user_id,
             name: $record->name,

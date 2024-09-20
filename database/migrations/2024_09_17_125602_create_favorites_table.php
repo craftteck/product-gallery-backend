@@ -16,6 +16,7 @@ return new class () extends Migration {
             $table->id()->comment('ID');
             $table->foreignId('user_id')->comment('ユーザーID')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->comment('プロダクトID')->constrained()->cascadeOnDelete();
+            $table->integer('version')->comment('バージョン');
             $table->timestamps();
 
             $table->unique(['user_id', 'product_id']);
