@@ -10,6 +10,7 @@ class CreateProductTest extends TestCase
 {
     use RefreshDatabase;
 
+    /** @var User $user */
     private User $user;
 
     public function setUp(): void
@@ -36,6 +37,7 @@ class CreateProductTest extends TestCase
         $response = $this->post('/api/products', $body, $headers);
 
         $response->assertStatus(200)->assertJson([
+            'userId' => $this->user->id,
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
@@ -44,7 +46,6 @@ class CreateProductTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('products', [
-            'id' => 1,
             'user_id' => $this->user->id,
             'name' => 'name',
             'summary' => 'summary',

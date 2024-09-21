@@ -24,6 +24,7 @@ class CreateProductUsecaseTest extends TestCase
             url: 'url',
         );
 
+        /** @var ProductRepositoryInterface&\PHPUnit\Framework\MockObject\MockObject $repository */
         $repository = $this->createMock(ProductRepositoryInterface::class);
         $repository
             ->expects($this->once())
@@ -51,7 +52,6 @@ class CreateProductUsecaseTest extends TestCase
                 )
             );
 
-        /** @var ProductRepositoryInterface&\PHPUnit\Framework\MockObject\MockObject $repository */
         $usecase = new CreateProductUsecase($repository);
         $result = $usecase->execute($usecaseInput);
 

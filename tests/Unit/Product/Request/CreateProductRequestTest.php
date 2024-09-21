@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Requests\Product\CreateProductRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
@@ -13,16 +12,15 @@ class CreateProductRequestTest extends TestCase
      */
     public function test_success_all(): void
     {
-        $request = Request::create('/api/products', 'GET', [
+        $params = [
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
             'url' => 'http://example.com',
-        ]);
-
+        ];
         $formRequest = new CreateProductRequest();
         $validator = Validator::make(
-            $request->all(),
+            $params,
             $formRequest->rules(),
             $formRequest->messages(),
             $formRequest->attributes(),
@@ -41,16 +39,15 @@ class CreateProductRequestTest extends TestCase
      */
     public function test_fails_required_rule(): void
     {
-        $request = Request::create('/api/products', 'GET', [
+        $params = [
             'name' => null,
             'summary' => null,
             'description' => null,
             'url' => null,
-        ]);
-
+        ];
         $formRequest = new CreateProductRequest();
         $validator = Validator::make(
-            $request->all(),
+            $params,
             $formRequest->rules(),
             $formRequest->messages(),
             $formRequest->attributes(),
@@ -84,16 +81,15 @@ class CreateProductRequestTest extends TestCase
      */
     public function test_fails_string_rule(): void
     {
-        $request = Request::create('/api/products', 'GET', [
+        $params = [
             'name' => 0,
             'summary' => 0,
             'description' => 0,
             'url' => 'http://example.com',
-        ]);
-
+        ];
         $formRequest = new CreateProductRequest();
         $validator = Validator::make(
-            $request->all(),
+            $params,
             $formRequest->rules(),
             $formRequest->messages(),
             $formRequest->attributes(),
@@ -126,16 +122,15 @@ class CreateProductRequestTest extends TestCase
      */
     public function test_fails_url_ruls(): void
     {
-        $request = Request::create('/api/products', 'GET', [
+        $params = [
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
             'url' => 'not url',
-        ]);
-
+        ];
         $formRequest = new CreateProductRequest();
         $validator = Validator::make(
-            $request->all(),
+            $params,
             $formRequest->rules(),
             $formRequest->messages(),
             $formRequest->attributes(),
@@ -164,16 +159,15 @@ class CreateProductRequestTest extends TestCase
      */
     public function test_fails_max_rule(): void
     {
-        $request = Request::create('/api/products', 'GET', [
+        $params = [
             'name' => str_repeat('A', 101),
             'summary' => str_repeat('A', 301),
             'description' => str_repeat('A', 2001),
             'url' => 'http://example.com',
-        ]);
-
+        ];
         $formRequest = new CreateProductRequest();
         $validator = Validator::make(
-            $request->all(),
+            $params,
             $formRequest->rules(),
             $formRequest->messages(),
             $formRequest->attributes(),

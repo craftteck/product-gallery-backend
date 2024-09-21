@@ -4,6 +4,7 @@ namespace Tests\Feature\Product;
 
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -11,7 +12,11 @@ class DeleteProductTest extends TestCase
 {
     use RefreshDatabase;
 
+    /** @var User $user */
     private User $user;
+
+    /** @var Collection<int,Product> $products */
+    private Collection $products;
 
     public function setUp(): void
     {
@@ -19,7 +24,7 @@ class DeleteProductTest extends TestCase
 
         $this->user = User::factory()->create();
 
-        Product::factory(3)->create(['user_id' => $this->user->id]);
+        $this->products = Product::factory(3)->create(['user_id' => $this->user->id]);
     }
 
     /**
@@ -29,16 +34,19 @@ class DeleteProductTest extends TestCase
     {
         $this->actingAs($this->user, 'web');
 
-        $body = ['ids' => [1, 2]];
+        $body = ['ids' => [
+            $this->products[0]?->id,
+            $this->products[1]?->id,
+        ]];
         $headers = ['Accept' => 'application/json'];
         $response = $this->delete('/api/products', $body, $headers);
 
         $response->assertStatus(204);
 
-        $this->assertDatabaseMissing('products', ['id' => 1]);
-        $this->assertDatabaseMissing('products', ['id' => 2]);
+        $this->assertDatabaseMissing('products', ['id' => $this->products[0]?->id]);
+        $this->assertDatabaseMissing('products', ['id' => $this->products[1]?->id]);
 
-        $this->assertDatabaseHas('products', ['id' => 3]);
+        $this->assertDatabaseHas('products', ['id' => $this->products[2]?->id]);
     }
 
     /**
@@ -46,7 +54,10 @@ class DeleteProductTest extends TestCase
      */
     public function test_401(): void
     {
-        $body = ['ids' => [1, 2]];
+        $body = ['ids' => [
+            $this->products[0]?->id,
+            $this->products[1]?->id,
+        ]];
         $headers = ['Accept' => 'application/json'];
         $response = $this->post('/api/products', $body, $headers);
 

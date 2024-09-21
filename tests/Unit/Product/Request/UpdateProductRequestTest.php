@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Requests\Product\UpdateProductRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
@@ -13,17 +12,16 @@ class UpdateProductRequestTest extends TestCase
      */
     public function test_success_all(): void
     {
-        $request = Request::create('/api/products/1', 'PUT', [
+        $params = [
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
             'url' => 'http://example.com',
             'version' => 2,
-        ]);
-
+        ];
         $formRequest = new UpdateProductRequest();
         $validator = Validator::make(
-            $request->all(),
+            $params,
             $formRequest->rules(),
             $formRequest->messages(),
             $formRequest->attributes(),
@@ -42,17 +40,16 @@ class UpdateProductRequestTest extends TestCase
      */
     public function test_fails_required_rule(): void
     {
-        $request = Request::create('/api/products/1', 'PUT', [
+        $params = [
             'name' => null,
             'summary' => null,
             'description' => null,
             'url' => null,
             'version' => null,
-        ]);
-
+        ];
         $formRequest = new UpdateProductRequest();
         $validator = Validator::make(
-            $request->all(),
+            $params,
             $formRequest->rules(),
             $formRequest->messages(),
             $formRequest->attributes(),
@@ -89,17 +86,16 @@ class UpdateProductRequestTest extends TestCase
      */
     public function test_fails_string_rule(): void
     {
-        $request = Request::create('/api/products/1', 'PUT', [
+        $params = [
             'name' => 0,
             'summary' => 0,
             'description' => 0,
             'url' => 'http://example.com',
             'version' => 2
-        ]);
-
+        ];
         $formRequest = new UpdateProductRequest();
         $validator = Validator::make(
-            $request->all(),
+            $params,
             $formRequest->rules(),
             $formRequest->messages(),
             $formRequest->attributes(),
@@ -133,17 +129,16 @@ class UpdateProductRequestTest extends TestCase
      */
     public function test_fails_integer_rule(): void
     {
-        $request = Request::create('/api/products/1', 'PUT', [
+        $params = [
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
             'url' => 'http://example.com',
             'version' => 'version',
-        ]);
-
+        ];
         $formRequest = new UpdateProductRequest();
         $validator = Validator::make(
-            $request->all(),
+            $params,
             $formRequest->rules(),
             $formRequest->messages(),
             $formRequest->attributes(),
@@ -173,17 +168,16 @@ class UpdateProductRequestTest extends TestCase
      */
     public function test_fails_url_ruls(): void
     {
-        $request = Request::create('/api/products/1', 'PUT', [
+        $params = [
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
             'url' => 'not url',
             'version' => 2,
-        ]);
-
+        ];
         $formRequest = new UpdateProductRequest();
         $validator = Validator::make(
-            $request->all(),
+            $params,
             $formRequest->rules(),
             $formRequest->messages(),
             $formRequest->attributes(),
@@ -214,17 +208,16 @@ class UpdateProductRequestTest extends TestCase
      */
     public function test_fails_max_rule(): void
     {
-        $request = Request::create('/api/products/1', 'PUT', [
+        $params = [
             'name' => str_repeat('A', 101),
             'summary' => str_repeat('A', 301),
             'description' => str_repeat('A', 2001),
             'url' => 'http://example.com',
             'version' => 2,
-        ]);
-
+        ];
         $formRequest = new UpdateProductRequest();
         $validator = Validator::make(
-            $request->all(),
+            $params,
             $formRequest->rules(),
             $formRequest->messages(),
             $formRequest->attributes(),

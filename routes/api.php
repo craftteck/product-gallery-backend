@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Favorite\CreateFavoriteController;
 use App\Http\Controllers\Product\CreateProductController;
 use App\Http\Controllers\Product\DeleteProductController;
 use App\Http\Controllers\Product\ReadProductController;
@@ -18,4 +19,10 @@ Route::prefix('products')
         Route::put('{id}', [UpdateProductController::class, 'update'])->whereNumber('id');
         Route::get('{id}', [ReadProductController::class, 'read'])->whereNumber('id');
         Route::delete('', [DeleteProductController::class, 'delete']);
+    });
+
+Route::prefix('favorites')
+    ->middleware('auth:sanctum')
+    ->group(function () {
+        Route::post('', [CreateFavoriteController::class, 'create']);
     });

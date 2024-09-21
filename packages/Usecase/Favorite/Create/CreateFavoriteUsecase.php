@@ -64,7 +64,7 @@ final readonly class CreateFavoriteUsecase implements CreateFavoriteUsecaseInter
         return new CreateFavoriteUsecaseOutput(
             id: $favoriteId,
             userId: $favorite->userId,
-            productId: $favorite->userId,
+            productId: $favorite->productId,
             version: $version,
         );
     }

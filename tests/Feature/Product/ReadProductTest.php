@@ -11,7 +11,10 @@ class ReadProductTest extends TestCase
 {
     use RefreshDatabase;
 
+    /** @var User $user */
     private User $user;
+
+    /** @var Product $product */
     private Product $product;
 
     public function setUp(): void
@@ -39,13 +42,14 @@ class ReadProductTest extends TestCase
         $headers = ['Accept' => 'application/json'];
         $response = $this->get("/api/products/{$this->product->id}", $headers);
 
-        $response->assertStatus(200)->assertJson([
+        $response->assertStatus(200)->assertExactJson([
             'id' => $this->product->id,
             'userId' => $this->user->id,
             'name' => 'name',
             'summary' => 'summary',
             'description' => 'description',
             'url' => 'url',
+            'version' => 1,
         ]);
     }
 
