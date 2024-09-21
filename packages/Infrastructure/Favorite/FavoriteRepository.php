@@ -1,13 +1,13 @@
 <?php
 
-namespace Packages\Infrastructure\Product;
+namespace Packages\Infrastructure\Favorite;
 
 use App\Models\Favorite;
 use Packages\Domain\Favorite\Favorite as FavoriteEntity;
-use Packages\Domain\Product\FavoriteRepositoryInterface;
+use Packages\Domain\Favorite\FavoriteRepositoryInterface;
 
 /**
- * プロダクトのリポジトリクラス
+ * お気に入りのリポジトリクラス
  */
 final readonly class FavoriteRepository implements FavoriteRepositoryInterface
 {

@@ -3,7 +3,7 @@
 namespace Packages\Usecase\Product\Delete;
 
 /**
- * プロダクト削除のコマンドクラス
+ * プロダクト削除のユースケースインプット
  */
 final readonly class DeleteProductUsecaseInput
 {

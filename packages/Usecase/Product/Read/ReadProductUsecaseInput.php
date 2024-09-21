@@ -3,7 +3,7 @@
 namespace Packages\Usecase\Product\Read;
 
 /**
- * プロダクト取得のコマンドクラス
+ * プロダクト取得のユースケースインプット
  */
 final readonly class ReadProductUsecaseInput
 {

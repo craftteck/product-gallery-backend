@@ -3,7 +3,7 @@
 namespace Packages\Usecase\Product\Read;
 
 /**
- * プロダクト取得のインタラクターインターフェース
+ * プロダクト取得のユースケースインターフェース
  */
 interface ReadProductUsecaseInterface
 {

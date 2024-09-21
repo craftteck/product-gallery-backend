@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Packages\Domain\Product\FavoriteRepositoryInterface;
-use Packages\Infrastructure\Product\FavoriteRepository;
+use Packages\Domain\Favorite\FavoriteRepositoryInterface;
+use Packages\Infrastructure\Favorite\FavoriteRepository;
+use Packages\Usecase\Favorite\Create\CreateFavoriteUsecase;
+use Packages\Usecase\Favorite\Create\CreateFavoriteUsecaseInterface;
 
 class FavoriteServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,11 @@ class FavoriteServiceProvider extends ServiceProvider
         $this->app->bind(
             FavoriteRepositoryInterface::class,
             FavoriteRepository::class
+        );
+
+        $this->app->bind(
+            CreateFavoriteUsecaseInterface::class,
+            CreateFavoriteUsecase::class,
         );
     }
 

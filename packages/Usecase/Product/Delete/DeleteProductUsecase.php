@@ -5,7 +5,7 @@ namespace Packages\Usecase\Product\Delete;
 use Packages\Domain\Product\ProductRepositoryInterface;
 
 /**
- * プロダクト削除のインタラクタークラス
+ * プロダクト削除のユースケースクラス
  */
 final readonly class DeleteProductUsecase implements DeleteProductUsecaseInterface
 {

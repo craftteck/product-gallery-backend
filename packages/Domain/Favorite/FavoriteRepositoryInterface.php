@@ -1,8 +1,6 @@
 <?php
 
-namespace Packages\Domain\Product;
-
-use Packages\Domain\Favorite\Favorite;
+namespace Packages\Domain\Favorite;
 
 /**
  * お気に入りのリポジトリインターフェース

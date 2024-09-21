@@ -40,7 +40,7 @@ class CreateProductController extends Controller
     }
 
     /**
-     * リクエストをコマンドクラスに変換する
+     * リクエストをユースケースインプットに変換する
      *
      * @param CreateProductRequest $request
      * @return CreateProductUsecaseInput

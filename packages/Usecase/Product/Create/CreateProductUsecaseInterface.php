@@ -3,7 +3,7 @@
 namespace Packages\Usecase\Product\Create;
 
 /**
- * プロダクト作成のインタラクターインターフェース
+ * プロダクト作成のユースケースインターフェース
  */
 interface CreateProductUsecaseInterface
 {

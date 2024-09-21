@@ -40,7 +40,7 @@ class UpdateProductController extends Controller
     }
 
     /**
-     * リクエストをコマンドクラスに変換する
+     * リクエストをユースケースインプットに変換する
      *
      * @param UpdateProductRequest $request
      * @return UpdateProductUsecaseInput

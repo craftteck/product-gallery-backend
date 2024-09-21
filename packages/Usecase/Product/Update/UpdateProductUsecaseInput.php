@@ -3,7 +3,7 @@
 namespace Packages\Usecase\Product\Update;
 
 /**
- * プロダクト更新のコマンドクラス
+ * プロダクト更新のユースケースインプット
  */
 final readonly class UpdateProductUsecaseInput
 {

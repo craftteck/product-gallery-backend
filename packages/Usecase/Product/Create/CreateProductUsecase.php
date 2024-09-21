@@ -6,7 +6,7 @@ use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
 
 /**
- * プロダクト作成のインタラクタークラス
+ * プロダクト作成のユースケースクラス
  */
 final readonly class CreateProductUsecase implements CreateProductUsecaseInterface
 {
@@ -33,7 +33,7 @@ final readonly class CreateProductUsecase implements CreateProductUsecaseInterfa
     }
 
     /**
-     * コマンドクラスをエンティティに変換する
+     * ユースケースインプットをエンティティに変換する
      *
      * @param CreateProductUsecaseInput $usecaseInput
      * @return Product

@@ -3,7 +3,7 @@
 namespace Packages\Usecase\Product\Update;
 
 /**
- * プロダクト更新のインタラクターインターフェース
+ * プロダクト更新のユースケースインターフェース
  */
 interface UpdateProductUsecaseInterface
 {

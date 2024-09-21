@@ -7,7 +7,7 @@ use Packages\Domain\Product\ProductRepositoryInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * プロダクト更新のインタラクタークラス
+ * プロダクト更新のユースケースクラス
  */
 final readonly class UpdateProductUsecase implements UpdateProductUsecaseInterface
 {

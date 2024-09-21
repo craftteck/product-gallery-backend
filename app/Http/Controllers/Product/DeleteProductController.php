@@ -38,7 +38,7 @@ class DeleteProductController extends Controller
     }
 
     /**
-     * リクエストをコマンドクラスに変換する
+     * リクエストをユースケースインプットに変換する
      *
      * @param DeleteProductRequest $request
      * @return DeleteProductUsecaseInput

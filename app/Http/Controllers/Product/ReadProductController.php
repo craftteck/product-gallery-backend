@@ -39,7 +39,7 @@ class ReadProductController extends Controller
     }
 
     /**
-     * リクエストをコマンドクラスに変換する
+     * リクエストをユースケースインプットに変換する
      *
      * @param ReadProductRequest $request
      * @return ReadProductUsecaseInput

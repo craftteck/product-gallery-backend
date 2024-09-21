@@ -3,7 +3,7 @@
 namespace Packages\Usecase\Product\Create;
 
 /**
- * プロダクト作成のコマンドクラス
+ * プロダクト作成のユースケースインプット
  */
 final readonly class CreateProductUsecaseInput
 {

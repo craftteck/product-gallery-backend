@@ -3,7 +3,7 @@
 namespace Packages\Usecase\Product\Delete;
 
 /**
- * プロダクト削除のインタラクターインターフェース
+ * プロダクト削除のユースケースインターフェース
  */
 interface DeleteProductUsecaseInterface
 {
