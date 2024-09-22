@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Favorite\CreateFavoriteController;
+use App\Http\Controllers\Favorite\DeleteFavoriteController;
 use App\Http\Controllers\Product\CreateProductController;
 use App\Http\Controllers\Product\DeleteProductController;
 use App\Http\Controllers\Product\ReadProductController;
@@ -25,4 +26,5 @@ Route::prefix('favorites')
     ->middleware('auth:sanctum')
     ->group(function () {
         Route::post('', [CreateFavoriteController::class, 'create']);
+        Route::delete('', [DeleteFavoriteController::class, 'delete']);
     });

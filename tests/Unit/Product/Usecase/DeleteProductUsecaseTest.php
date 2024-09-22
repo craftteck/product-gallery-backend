@@ -15,6 +15,7 @@ class DeleteProductUsecaseTest extends TestCase
             ids: [1, 2, 3],
         );
 
+        /** @var ProductRepositoryInterface&\PHPUnit\Framework\MockObject\MockObject $repository */
         $repository = $this->createMock(ProductRepositoryInterface::class);
         $repository
             ->expects($this->once())

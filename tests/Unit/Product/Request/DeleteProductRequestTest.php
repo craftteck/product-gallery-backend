@@ -86,7 +86,7 @@ class DeleteProductRequestTest extends TestCase
     }
 
     /**
-     * array エラーの検証
+     * integer エラーの検証
      */
     public function test_fails_integer_rule(): void
     {

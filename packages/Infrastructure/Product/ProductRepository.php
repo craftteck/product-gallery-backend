@@ -46,7 +46,6 @@ final readonly class ProductRepository implements ProductRepositoryInterface
     /**
      * プロダクトを更新する
      * TODO: 自身のユーザーIDを持つプロダクト以外は更新不可にする仕組みを検討
-     * TODO: 楽観ロックの仕組みを追加
      *
      * @param ProductEntity $product
      * @return ProductEntity

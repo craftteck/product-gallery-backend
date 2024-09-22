@@ -14,4 +14,11 @@ interface FavoriteRepositoryInterface
      * @return Favorite
      */
     public function insert(Favorite $favorite): Favorite;
+
+    /**
+     * お気に入りを削除する
+     *
+     * @param array<int> $ids
+     */
+    public function delete(array $ids): void;
 }
