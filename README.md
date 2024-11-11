@@ -1,66 +1,208 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Pruduct Gallary Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+作成したプロダクト（サービス）を展示できるサービス「Product Gallary」のAPI。  
 
-## About Laravel
+面白いアイデアでサービスを作ったはよいものの、ユーザーを獲得することが難しく、人目に触れずにクローズしてゆくサービスは多い。  
+特に個人開発者においては、プレスリリースを出す費用がなかったり、そもそもサービスの完成度が高くなくて公開しにくいケースも多い。  
+そういったサービス開発者のため、以下の機能を備えたサービスを開発したい。
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+* 気軽に安く、多くの人にサービスを公開できる
+* 閲覧者からサービスについてのフィードバックをもらえる
+* 資金力や開発力のある閲覧者にサービスを譲渡できる
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## インストール
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. リポジトリのクローン
+```
+git clone https://github.com/craftteck/product-gallery-backend.git
+```
 
-## Learning Laravel
+2. プロジェクトに移動
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```
+cd product-gallery-backend
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3. .envファイルの作成
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
+cp .env.example .env
+```
 
-## Laravel Sponsors
+4. パッケージのインストール
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```
+composer install
+```
 
-### Premium Partners
+5. APP_KEYの作成
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```
+php artisan key:generate
+```
 
-## Contributing
+6. Dockerコンテナ起動
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+./vendor/bin/sail up -d
+```
 
-## Code of Conduct
+7. 動作確認
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+sail composer check
+```
 
-## Security Vulnerabilities
+> [!NOTE]
+> 以下が実行される
+> - phpstan analyse
+> - php-cs-fixer fix --dry-run
+> - phpunit
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 技術スタック
 
-## License
+* 言語：PHP 8.3
+* フレームワーク：Laravel 11.0
+* DB：PostgreSQL 15
+* インフラ：未定
+* アーキテクチャ：クリーンアーキテクチャ、DDD、REST API
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## アーキテクチャ
+
+クリーンアーキテクチャとドメイン駆動設計（DDD）の考えを採用する。
+内から外への依存は許容しない。
+
+![クリーンアーキテクチャ](https://github.com/user-attachments/assets/b84eb8a3-f902-47ca-aad5-1a7d90233de2)
+
+### Controller
+
+* LaravelのControllerを利用する
+* 外部入力の受け取り、Usecaseへの処理移譲、出力の生成を実施する
+* 命名規則
+  * 例：`CreateUserController.php`
+  * 操作内容ごとにプレフィックスを付与する
+    * 新規作成 - Create
+    * 詳細取得 - Detail
+    * 更新 - Update
+    * 削除 - Delete
+    * 一覧取得 - Search
+* ディレクトリ
+  * `app/Http/Controllers/`以下に配置する
+  * 対象リソースごとにディレクトリを作成する（例：`app/Http/Controllers/User/CreateUserController.php`）
+
+### Request
+
+* LaravelのFormRequestを利用する
+* ここでは主に書式チェックのみを実施し、ビジネスルールに関するバリデーションは別途ドメインエンティティやドメインサービスで実施する
+* 命名規則
+  * 例：CreateUserRequest.php
+  * 操作内容ごとにプレフィックスを付与する（Create、Update...）
+* ディレクトリ
+  * `app/Http/Requests/`以下に配置する
+  * 対象リソースごとにディレクトリを作成する（例：`app/Http/Requests/User/CreateUserRequest.php`）
+ 
+### Model
+
+* LaravelのEloquent Modelを利用する
+* ModelはDBに関連する処理（リレーションなど）の記載にとどめ、ドメインルールやロジックは後述するDomain層のクラスに記載する
+* 命名規則
+  * 例：User.php
+* ディレクトリ
+  * `app/Http/Models/`以下に配置する
+
+### Usecase層
+
+##### Usecase
+
+* 一連の処理（ユースケース）の流れを記載する
+* 必要に応じて、ドメインエンティティ、ドメインサービス、リポジトリの呼び出しを実施し、処理を組み立てる
+* 命名規則
+  * 例：`CreateUserUsecase.php`
+  * 操作内容ごとにプレフィックスを付与する（Create、Update...）
+* ディレクトリ
+  * `packages/Usecase/`以下に配置する
+  * 対象リソース、操作内容ごとにディレクトリを作成する（例：`packages/Usecase/User/Create/CreateUserController.php`）
+
+##### Usecase Interface
+
+* コントローラーとの疎結合化、責務の明確化などのため、UsecaseのInterfaceを作成する
+* [WIP]
+
+##### UsecaseInput
+
+* コントローラーとの疎結合化、引数の増加などを防ぐため、Inputクラスを受け取る
+* [WIP]
+
+##### UsecaseOutput
+
+* コントローラーとの疎結合化、ドメイン知識の流出を防ぐため、Outputクラスを返す
+* [WIP]
+
+##### Query Service
+
+* 一覧取得処理など、リポジトリでは扱えない複数集約にまたがる処理を記載する
+* [WIP]
+
+### Domain層
+
+アプリケーションのビジネスルールやビジネスロジックを記載する。
+
+##### Entity
+
+* ドメインオブジェクト
+* 対象のエンティティに関するルールやロジックは、エンティティクラス内に記述する
+* 命名規則
+  * 例：User.php、Product.php
+  * 対象のエンティティを表す、適切な名称をつける
+* ディレクトリ
+  * `packages/Domain/`以下に配置する
+  * 対象のドメインごとにディレクトリを作成する（例：`packages/Domain/User/User.php`）
+
+##### Value Object
+
+* 値オブジェクト
+* 重要な意味を持つ値は基本的に値オブジェクトを作成し、ルールを記載する
+* 命名規則
+  * 例：Money.php、ProductCode.php
+  * 対象の値を表す、適切な名称をつける
+* ディレクトリ
+  * `packages/Domain/`以下に配置する
+  * 特定のドメインと密接に関連する場合、そのドメインのディレクトリ内に配置する（例：`packages/Domain/Product/ProductCode.php`）
+  * 特定のドメインとの関連がなく、共通のオブジェクトとなる場合、`packages/Domain/Common`以下に配置する
+
+##### Domain Service
+
+* 複数のエンティティにまたがるロジックや、エンティティ内に記載すると不自然になるロジックはドメインサービスに記載する
+* 命名規則
+  * 例：PasswordService.php
+  * 対象サービスクラスの責務を表す、適切な名称をつける
+* ディレクトリ
+  * `packages/Domain/`以下に配置する
+  * 特定のドメインと密接に関連する場合、そのドメインのディレクトリ内に配置する（例：`packages/Domain/Password/PasswordService.php`）
+ 
+##### Repository Interface
+
+* 依存性を逆転させるため、リポジトリのインターフェースを作成する
+* 命名規則
+  * 例：UserRepositoryInterface.php
+  * 接頭辞として対象のドメイン、接尾辞としてInterfaceを付与する
+* ディレクトリ
+  * `packages/Domain/`以下に配置する
+  * 対象のドメインのディレクトリ内に配置する（例：`packages/Domain/User/UserRepositoryInterface.php`）
+
+### Infrastructure
+
+DBやその他のインフラの処理や設定を配置する。
+
+##### Repository
+
+* リポジトリの実処理を記載するクラス
+* リポジトリの引数・戻り値はエンティティを介すること
+* リポジトリは集約単位で処理を実施すること
+* 一覧取得など、複数集約にまたがるクエリを発行する必要がある場合はクエリサービスに処理を任せる
+* 命名規則
+  * 例：UserRepository
+* ディレクトリ
+  * `packages/Infrastructure/`以下に配置する
+  * 対象のドメインのディレクトリ内に配置する（例：`packages/Infrastructure/User/UserRepository.php`）
+ 
