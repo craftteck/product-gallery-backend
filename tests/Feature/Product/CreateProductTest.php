@@ -4,6 +4,7 @@ namespace Tests\Feature\Product;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CreateProductTest extends TestCase
@@ -20,10 +21,8 @@ class CreateProductTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    /**
-     * 200 作成成功
-     */
-    public function test_200(): void
+    #[Test]
+    public function プロダクトの登録に成功する(): void
     {
         $this->actingAs($this->user, 'web');
 
@@ -55,10 +54,8 @@ class CreateProductTest extends TestCase
         ]);
     }
 
-    /**
-     * 401 認証エラー
-     */
-    public function test_401(): void
+    #[Test]
+    public function ユーザーに権限がない場合、認証エラーになる(): void
     {
         $body = [
             'name' => 'name',
@@ -77,7 +74,7 @@ class CreateProductTest extends TestCase
     /**
      * 422 パラメーターエラー
      */
-    public function test_422(): void
+    public function パラメータが不正な場合、バリデーションエラーになる(): void
     {
         $this->actingAs($this->user, 'web');
 

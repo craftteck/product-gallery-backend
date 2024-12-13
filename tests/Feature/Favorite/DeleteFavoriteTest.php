@@ -6,6 +6,7 @@ use App\Models\Favorite;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class DeleteFavoriteTest extends TestCase
@@ -27,10 +28,8 @@ class DeleteFavoriteTest extends TestCase
         $this->favorites = Favorite::factory(3)->create(['user_id' => $this->user->id]);
     }
 
-    /**
-     * 204 削除成功
-     */
-    public function test_204(): void
+    #[Test]
+    public function お気に入りの削除に成功する(): void
     {
         $this->actingAs($this->user, 'web');
 
@@ -49,10 +48,8 @@ class DeleteFavoriteTest extends TestCase
         $this->assertDatabaseHas('favorites', ['id' => $this->favorites[2]?->id]);
     }
 
-    /**
-     * 401 認証エラー
-     */
-    public function test_401(): void
+    #[Test]
+    public function ユーザーに権限がない場合、認証エラーになる(): void
     {
         $body = ['ids' => [
             $this->favorites[0]?->id,
@@ -66,10 +63,8 @@ class DeleteFavoriteTest extends TestCase
         ]);
     }
 
-    /**
-     * 422 パラメーターエラー
-     */
-    public function test_422(): void
+    #[Test]
+    public function パラメータが不正な場合、バリデーションエラーになる(): void
     {
         $this->actingAs($this->user, 'web');
 

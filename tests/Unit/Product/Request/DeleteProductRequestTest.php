@@ -3,14 +3,13 @@
 use App\Http\Requests\Product\DeleteProductRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class DeleteProductRequestTest extends TestCase
 {
-    /**
-     * バリデーション通過
-     */
-    public function test_success_all(): void
+    #[Test]
+    public function 正しいパラメータが渡された場合、バリデーションが通過する(): void
     {
         $params = ['ids' => [1, 2, 3]];
         $formRequest = new DeleteProductRequest();
@@ -29,10 +28,8 @@ class DeleteProductRequestTest extends TestCase
         }
     }
 
-    /**
-     * required エラーの検証
-     */
-    public function test_fails_required_rule(): void
+    #[Test]
+    public function 必須のパラメータが存在しない場合、バリデーションが失敗する(): void
     {
         $params = ['ids' => []];
         $formRequest = new DeleteProductRequest();
@@ -57,10 +54,8 @@ class DeleteProductRequestTest extends TestCase
         $this->fail('ValidationException was not thrown.');
     }
 
-    /**
-     * array エラーの検証
-     */
-    public function test_fails_array_rule(): void
+    #[Test]
+    public function 配列のパラメータに配列以外が渡された場合、バリデーションが失敗する(): void
     {
         $params = ['ids' => 1];
         $formRequest = new DeleteProductRequest();
@@ -85,10 +80,8 @@ class DeleteProductRequestTest extends TestCase
         $this->fail('ValidationException was not thrown.');
     }
 
-    /**
-     * integer エラーの検証
-     */
-    public function test_fails_integer_rule(): void
+    #[Test]
+    public function 数値のパラメータに数値以外が渡された場合、バリデーションが失敗する(): void
     {
         $params = ['ids' => ['a']];
         $formRequest = new DeleteProductRequest();

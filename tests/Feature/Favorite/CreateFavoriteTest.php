@@ -5,6 +5,7 @@ namespace Tests\Feature\Favorite;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CreateFavoriteTest extends TestCase
@@ -25,10 +26,8 @@ class CreateFavoriteTest extends TestCase
         $this->product = Product::factory()->create();
     }
 
-    /**
-     * 200 作成成功
-     */
-    public function test_200(): void
+    #[Test]
+    public function お気に入りの登録に成功する(): void
     {
         $this->actingAs($this->user, 'web');
 
@@ -49,10 +48,8 @@ class CreateFavoriteTest extends TestCase
         ]);
     }
 
-    /**
-     * 401 認証エラー
-     */
-    public function test_401(): void
+    #[Test]
+    public function ユーザーに操作権限がない場合、認証エラーになる(): void
     {
         $body = ['product_id' => $this->product->id];
         $headers = ['Accept' => 'application/json'];
@@ -63,10 +60,8 @@ class CreateFavoriteTest extends TestCase
         ]);
     }
 
-    /**
-     * 422 パラメーターエラー
-     */
-    public function test_422(): void
+    #[Test]
+    public function パラメータが不正な場合、バリデーションエラーになる(): void
     {
         $this->actingAs($this->user, 'web');
 

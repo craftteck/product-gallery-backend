@@ -5,6 +5,7 @@ namespace Tests\Feature\Product;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ReadProductTest extends TestCase
@@ -32,10 +33,8 @@ class ReadProductTest extends TestCase
         ]);
     }
 
-    /**
-     * 200 取得成功
-     */
-    public function test_200(): void
+    #[Test]
+    public function プロダクトの取得に成功する(): void
     {
         $this->actingAs($this->user, 'web');
 
@@ -53,10 +52,8 @@ class ReadProductTest extends TestCase
         ]);
     }
 
-    /**
-     * 401 認証エラー
-     */
-    public function test_401(): void
+    #[Test]
+    public function ユーザーに権限がない場合、認証エラーになる(): void
     {
         $headers = ['Accept' => 'application/json'];
         $response = $this->get("/api/products/{$this->product->id}", $headers);
@@ -66,12 +63,8 @@ class ReadProductTest extends TestCase
         ]);
     }
 
-    /**
-     * 404
-     * - URLが不正
-     * - 対象リソースが存在しない
-     */
-    public function test_404(): void
+    #[Test]
+    public function 対象のプロダクトが存在しない場合、NotFoundエラーになる(): void
     {
         $this->actingAs($this->user, 'web');
 

@@ -5,6 +5,7 @@ namespace Tests\Feature\Product;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class UpdateProductTest extends TestCase
@@ -28,10 +29,8 @@ class UpdateProductTest extends TestCase
         ]);
     }
 
-    /**
-     * 200 更新成功
-     */
-    public function test_200(): void
+    #[Test]
+    public function プロダクトの更新に成功する(): void
     {
         $this->actingAs($this->user, 'web');
 
@@ -66,10 +65,8 @@ class UpdateProductTest extends TestCase
         ]);
     }
 
-    /**
-     * 401 認証エラー
-     */
-    public function test_401(): void
+    #[Test]
+    public function ユーザーに権限がない場合、認証エラーになる(): void
     {
         $body = [
             'name' => 'name',
@@ -86,12 +83,8 @@ class UpdateProductTest extends TestCase
         ]);
     }
 
-    /**
-     * 404
-     * - URLが不正
-     * - リソースが存在しない
-     */
-    public function test_404(): void
+    #[Test]
+    public function 対象のプロダクトが存在しない場合、NotFoundエラーになる(): void
     {
         $this->actingAs($this->user, 'web');
 
@@ -117,10 +110,8 @@ class UpdateProductTest extends TestCase
         ]);
     }
 
-    /**
-     * 409 楽観ロックエラー
-     */
-    public function test_409(): void
+    #[Test]
+    public function 更新対象のプロダクトが直前に他のユーザーに更新されている場合、楽観ロックエラーになる(): void
     {
         $this->actingAs($this->user, 'web');
 
@@ -139,10 +130,8 @@ class UpdateProductTest extends TestCase
         ]);
     }
 
-    /**
-     * 422 パラメータエラー
-     */
-    public function test_422(): void
+    #[Test]
+    public function パラメータが不正な場合、バリデーションエラーになる(): void
     {
         $this->actingAs($this->user, 'web');
 

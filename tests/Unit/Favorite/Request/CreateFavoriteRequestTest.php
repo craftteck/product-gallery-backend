@@ -3,14 +3,13 @@
 use App\Http\Requests\Favorite\CreateFavoriteRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CreateFavoriteRequestTest extends TestCase
 {
-    /**
-     * バリデーション通過
-     */
-    public function test_success_all(): void
+    #[Test]
+    public function 正しいパラメータが渡された場合、バリデーションが通過する(): void
     {
         $params = ['product_id' => 1];
         $formRequest = new CreateFavoriteRequest();
@@ -29,10 +28,8 @@ class CreateFavoriteRequestTest extends TestCase
         }
     }
 
-    /**
-     * required エラーの検証
-     */
-    public function test_fails_required_rule(): void
+    #[Test]
+    public function 必須のパラメータが存在しない場合、バリデーションが失敗する(): void
     {
         $params = ['product_id' => null];
         $formRequest = new CreateFavoriteRequest();
@@ -57,10 +54,8 @@ class CreateFavoriteRequestTest extends TestCase
         $this->fail('ValidationException was not thrown.');
     }
 
-    /**
-     * integer エラーの検証
-     */
-    public function test_fails_integer_rule(): void
+    #[Test]
+    public function 数値のパラメータに数値以外が渡された場合、バリデーションが失敗する(): void
     {
         $params = ['product_id' => 'a'];
         $formRequest = new CreateFavoriteRequest();

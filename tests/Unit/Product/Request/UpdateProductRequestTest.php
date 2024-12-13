@@ -3,14 +3,13 @@
 use App\Http\Requests\Product\UpdateProductRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class UpdateProductRequestTest extends TestCase
 {
-    /**
-     * バリデーション通過
-     */
-    public function test_success_all(): void
+    #[Test]
+    public function 正しいパラメータが渡された場合、バリデーションが通過する(): void
     {
         $params = [
             'name' => 'name',
@@ -35,10 +34,8 @@ class UpdateProductRequestTest extends TestCase
         }
     }
 
-    /**
-     * required エラーの検証
-     */
-    public function test_fails_required_rule(): void
+    #[Test]
+    public function 必須のパラメータが存在しない場合、バリデーションが失敗する(): void
     {
         $params = [
             'name' => null,
@@ -81,10 +78,8 @@ class UpdateProductRequestTest extends TestCase
         $this->fail('ValidationException was not thrown.');
     }
 
-    /**
-     * string エラーの検証
-     */
-    public function test_fails_string_rule(): void
+    #[Test]
+    public function 文字列のパラメータに文字列以外が渡された場合、バリデーションが失敗する(): void
     {
         $params = [
             'name' => 0,
@@ -124,10 +119,8 @@ class UpdateProductRequestTest extends TestCase
         $this->fail('ValidationException was not thrown.');
     }
 
-    /**
-     * integer エラーの検証
-     */
-    public function test_fails_integer_rule(): void
+    #[Test]
+    public function 数値のパラメータに数値以外が渡された場合、バリデーションが失敗する(): void
     {
         $params = [
             'name' => 'name',
@@ -163,10 +156,8 @@ class UpdateProductRequestTest extends TestCase
         $this->fail('ValidationException was not thrown.');
     }
 
-    /**
-     * url エラーの検証
-     */
-    public function test_fails_url_ruls(): void
+    #[Test]
+    public function urlにURL以外の書式の文字列が渡された場合、バリデーションが失敗する(): void
     {
         $params = [
             'name' => 'name',
@@ -203,10 +194,8 @@ class UpdateProductRequestTest extends TestCase
         $this->fail('ValidationException was not thrown.');
     }
 
-    /**
-     * max エラーの検証
-     */
-    public function test_fails_max_rule(): void
+    #[Test]
+    public function 最大文字数を超過する文字列が渡された場合、バリデーションが失敗する(): void
     {
         $params = [
             'name' => str_repeat('A', 101),
