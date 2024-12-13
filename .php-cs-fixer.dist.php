@@ -15,7 +15,8 @@ return $config
     ])
     ->setFinder(PhpCsFixer\Finder::create()
         ->exclude([
-            'vendor'
+            'vendor',
+            'bootstrap/cache',
         ])
         ->in(__DIR__)
     )
