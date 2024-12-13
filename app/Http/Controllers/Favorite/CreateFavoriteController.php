@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Favorite\CreateFavoriteRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Packages\UseCase\Favorite\Create\CreateFavoriteUseCaseInput;
-use Packages\UseCase\Favorite\Create\CreateFavoriteUseCaseInterface;
-use Packages\UseCase\Favorite\Create\CreateFavoriteUseCaseOutput;
+use Packages\UseCase\Favorite\Create\CreateFavoriteUseCase;
+use Packages\UseCase\Favorite\Create\RegisterFavoriteCommand;
+use Packages\UseCase\Favorite\FavoriteDto;
 
 /**
  * お気に入り登録のコントローラークラス
@@ -18,10 +18,10 @@ class CreateFavoriteController extends Controller
     /**
      * コンストラクタ
      *
-     * @param CreateFavoriteUseCaseInterface $useCase
+     * @param CreateFavoriteUseCase $useCase
      */
     public function __construct(
-        private CreateFavoriteUseCaseInterface $useCase,
+        private CreateFavoriteUseCase $useCase,
     ) {
     }
 
@@ -34,20 +34,20 @@ class CreateFavoriteController extends Controller
      */
     public function create(CreateFavoriteRequest $request): JsonResponse
     {
-        $useCaseInput = $this->toUseCaseInput($request);
-        $useCaseOutput = $this->useCase->execute($useCaseInput);
-        return $this->toResponse($useCaseOutput);
+        $command = $this->toCommand($request);
+        $dto = $this->useCase->execute($command);
+        return $this->toResponse($dto);
     }
 
     /**
-     * リクエストをユースケースインプットに変換する
+     * リクエストをコマンドに変換する
      *
      * @param CreateFavoriteRequest $request
-     * @return CreateFavoriteUseCaseInput
+     * @return RegisterFavoriteCommand
      */
-    private function toUseCaseInput(CreateFavoriteRequest $request): CreateFavoriteUseCaseInput
+    private function toCommand(CreateFavoriteRequest $request): RegisterFavoriteCommand
     {
-        return new CreateFavoriteUseCaseInput(
+        return new RegisterFavoriteCommand(
             userId: (int) Auth::id(),
             productId: $request->integer('product_id'),
         );
@@ -56,11 +56,11 @@ class CreateFavoriteController extends Controller
     /**
      * DTOをレスポンスに変換する
      *
-     * @param CreateFavoriteUseCaseOutput $useCaseOutput
+     * @param FavoriteDto $dto
      * @return JsonResponse
      */
-    private function toResponse(CreateFavoriteUseCaseOutput $useCaseOutput): JsonResponse
+    private function toResponse(FavoriteDto $dto): JsonResponse
     {
-        return response()->json(get_object_vars($useCaseOutput));
+        return response()->json(get_object_vars($dto));
     }
 }

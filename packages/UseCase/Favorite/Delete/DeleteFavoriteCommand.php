@@ -3,9 +3,9 @@
 namespace Packages\UseCase\Favorite\Delete;
 
 /**
- * お気に入り削除のユースケースインプット
+ * お気に入り削除のコマンド
  */
-final readonly class DeleteFavoriteUseCaseInput
+final readonly class DeleteFavoriteCommand
 {
     /**
      * コンストラクタ

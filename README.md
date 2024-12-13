@@ -125,19 +125,14 @@ sail composer check
     -   `packages/UseCase/`以下に配置する
     -   対象リソース、操作内容ごとにディレクトリを作成する（例：`packages/UseCase/User/Create/CreateUserController.php`）
 
-##### UseCase Interface
+##### Command
 
--   コントローラーとの疎結合化、責務の明確化などのため、UseCase の Interface を作成する
+-   コントローラーとの疎結合化、引数の増加などを防ぐため、Command クラスを受け取る
 -   [WIP]
 
-##### UseCaseInput
+##### DTO
 
--   コントローラーとの疎結合化、引数の増加などを防ぐため、Input クラスを受け取る
--   [WIP]
-
-##### UseCaseOutput
-
--   コントローラーとの疎結合化、ドメイン知識の流出を防ぐため、Output クラスを返す
+-   コントローラーとの疎結合化、ドメイン知識の流出を防ぐため、DTO クラスを返す
 -   [WIP]
 
 ##### Query Service

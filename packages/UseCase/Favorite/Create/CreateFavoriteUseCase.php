@@ -4,11 +4,12 @@ namespace Packages\UseCase\Favorite\Create;
 
 use Packages\Domain\Favorite\Favorite;
 use Packages\Domain\Favorite\FavoriteRepositoryInterface;
+use Packages\UseCase\Favorite\FavoriteDto;
 
 /**
  * お気に入り登録のユースケースクラス
  */
-final readonly class CreateFavoriteUseCase implements CreateFavoriteUseCaseInterface
+readonly class CreateFavoriteUseCase
 {
     /**
      * コンストラクタ
@@ -23,27 +24,27 @@ final readonly class CreateFavoriteUseCase implements CreateFavoriteUseCaseInter
     /**
      * お気に入りを登録する
      *
-     * @param CreateFavoriteUseCaseInput $useCaseInput
-     * @return CreateFavoriteUseCaseOutput
+     * @param RegisterFavoriteCommand $command
+     * @return FavoriteDto
      */
-    public function execute(CreateFavoriteUseCaseInput $useCaseInput): CreateFavoriteUseCaseOutput
+    public function execute(RegisterFavoriteCommand $command): FavoriteDto
     {
-        $product = $this->repository->insert($this->toEntity($useCaseInput));
-        return $this->toUseCaseOutput($product);
+        $product = $this->repository->insert($this->toEntity($command));
+        return $this->toDto($product);
     }
 
     /**
-     * ユースケースインプットをエンティティに変換する
+     * コマンドをエンティティに変換する
      *
-     * @param CreateFavoriteUseCaseInput $useCaseInput
+     * @param RegisterFavoriteCommand $command
      * @return Favorite
      */
-    private function toEntity(CreateFavoriteUseCaseInput $useCaseInput): Favorite
+    private function toEntity(RegisterFavoriteCommand $command): Favorite
     {
         return new Favorite(
             id: null,
-            userId: $useCaseInput->userId,
-            productId: $useCaseInput->productId,
+            userId: $command->userId,
+            productId: $command->productId,
             version: null,
         );
     }
@@ -52,16 +53,16 @@ final readonly class CreateFavoriteUseCase implements CreateFavoriteUseCaseInter
      * エンティティをDTOに変換する
      *
      * @param Favorite $favorite
-     * @return CreateFavoriteUseCaseOutput
+     * @return FavoriteDto
      */
-    private function toUseCaseOutput(Favorite $favorite): CreateFavoriteUseCaseOutput
+    private function toDto(Favorite $favorite): FavoriteDto
     {
         /** @var int $favoriteId */
         $favoriteId = $favorite->id;
         /** @var int $version */
         $version = $favorite->version;
 
-        return new CreateFavoriteUseCaseOutput(
+        return new FavoriteDto(
             id: $favoriteId,
             userId: $favorite->userId,
             productId: $favorite->productId,

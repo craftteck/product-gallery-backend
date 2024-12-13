@@ -7,7 +7,7 @@ use Packages\Domain\Favorite\FavoriteRepositoryInterface;
 /**
  * お気に入り削除のユースケースクラス
  */
-final readonly class DeleteFavoriteUseCase implements DeleteFavoriteUseCaseInterface
+readonly class DeleteFavoriteUseCase
 {
     /**
      * コンストラクタ
@@ -22,10 +22,10 @@ final readonly class DeleteFavoriteUseCase implements DeleteFavoriteUseCaseInter
     /**
      * お気に入りを削除する
      *
-     * @param DeleteFavoriteUseCaseInput $useCaseInput
+     * @param DeleteFavoriteCommand $command
      */
-    public function execute(DeleteFavoriteUseCaseInput $useCaseInput): void
+    public function execute(DeleteFavoriteCommand $command): void
     {
-        $this->repository->delete($useCaseInput->ids);
+        $this->repository->delete($command->ids);
     }
 }

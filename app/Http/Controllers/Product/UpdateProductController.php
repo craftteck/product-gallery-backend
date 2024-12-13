@@ -34,9 +34,9 @@ class UpdateProductController extends Controller
      */
     public function Update(UpdateProductRequest $request): JsonResponse
     {
-        $useCaseInput = $this->toCommand($request);
-        $useCaseOutput = $this->useCase->execute($useCaseInput);
-        return $this->toResponse($useCaseOutput);
+        $command = $this->toCommand($request);
+        $dto = $this->useCase->execute($command);
+        return $this->toResponse($dto);
     }
 
     /**

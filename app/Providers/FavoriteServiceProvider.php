@@ -21,16 +21,6 @@ class FavoriteServiceProvider extends ServiceProvider
             FavoriteRepositoryInterface::class,
             FavoriteRepository::class
         );
-
-        $this->app->bind(
-            CreateFavoriteUseCaseInterface::class,
-            CreateFavoriteUseCase::class,
-        );
-
-        $this->app->bind(
-            DeleteFavoriteUseCaseInterface::class,
-            DeleteFavoriteUseCase::class,
-        );
     }
 
     /**

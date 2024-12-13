@@ -5,8 +5,8 @@ namespace Tests\Unit\Favorite;
 use Packages\Domain\Favorite\Favorite;
 use Packages\Domain\Favorite\FavoriteRepositoryInterface;
 use Packages\UseCase\Favorite\Create\CreateFavoriteUseCase;
-use Packages\UseCase\Favorite\Create\CreateFavoriteUseCaseInput;
-use Packages\UseCase\Favorite\Create\CreateFavoriteUseCaseOutput;
+use Packages\UseCase\Favorite\Create\RegisterFavoriteCommand;
+use Packages\UseCase\Favorite\FavoriteDto;
 use PHPUnit\Framework\TestCase;
 
 class CreateFavoriteUseCaseTest extends TestCase
@@ -16,7 +16,7 @@ class CreateFavoriteUseCaseTest extends TestCase
      */
     public function test_execute(): void
     {
-        $useCaseInput = new CreateFavoriteUseCaseInput(
+        $command = new RegisterFavoriteCommand(
             userId: 1,
             productId: 1,
         );
@@ -44,9 +44,9 @@ class CreateFavoriteUseCaseTest extends TestCase
             );
 
         $useCase = new CreateFavoriteUseCase($repository);
-        $result = $useCase->execute($useCaseInput);
+        $result = $useCase->execute($command);
 
-        $expected = new CreateFavoriteUseCaseOutput(
+        $expected = new FavoriteDto(
             id: 1,
             userId: 1,
             productId: 1,

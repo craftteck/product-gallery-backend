@@ -3,15 +3,15 @@
 namespace Tests\Unit\Favorite;
 
 use Packages\Domain\Favorite\FavoriteRepositoryInterface;
+use Packages\UseCase\Favorite\Delete\DeleteFavoriteCommand;
 use Packages\UseCase\Favorite\Delete\DeleteFavoriteUseCase;
-use Packages\UseCase\Favorite\Delete\DeleteFavoriteUseCaseInput;
 use PHPUnit\Framework\TestCase;
 
 class DeleteFavoriteUseCaseTest extends TestCase
 {
     public function test_execute(): void
     {
-        $useCaseInput = new DeleteFavoriteUseCaseInput(
+        $command = new DeleteFavoriteCommand(
             ids: [1, 2, 3],
         );
 
@@ -20,9 +20,9 @@ class DeleteFavoriteUseCaseTest extends TestCase
         $repository
             ->expects($this->once())
             ->method('delete')
-            ->with($this->equalTo($useCaseInput->ids));
+            ->with($this->equalTo($command->ids));
 
         $useCase = new DeleteFavoriteUseCase($repository);
-        $useCase->execute($useCaseInput);
+        $useCase->execute($command);
     }
 }
