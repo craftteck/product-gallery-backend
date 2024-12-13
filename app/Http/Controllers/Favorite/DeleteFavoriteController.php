@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Favorite;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Favorite\DeleteFavoriteRequest;
 use Illuminate\Http\Response;
-use Packages\Usecase\Favorite\Delete\DeleteFavoriteUsecaseInput;
-use Packages\Usecase\Favorite\Delete\DeleteFavoriteUsecaseInterface;
+use Packages\UseCase\Favorite\Delete\DeleteFavoriteUseCaseInput;
+use Packages\UseCase\Favorite\Delete\DeleteFavoriteUseCaseInterface;
 
 /**
  * お気に入り削除のコントローラークラス
@@ -16,10 +16,10 @@ class DeleteFavoriteController extends Controller
     /**
      * コンストラクタ
      *
-     * @param DeleteFavoriteUsecaseInterface $usecase
+     * @param DeleteFavoriteUseCaseInterface $useCase
      */
     public function __construct(
-        private DeleteFavoriteUsecaseInterface $usecase,
+        private DeleteFavoriteUseCaseInterface $useCase,
     ) {
     }
 
@@ -32,8 +32,8 @@ class DeleteFavoriteController extends Controller
      */
     public function delete(DeleteFavoriteRequest $request): Response
     {
-        $usecaseInput = $this->toUsecaseInput($request);
-        $this->usecase->execute($usecaseInput);
+        $useCaseInput = $this->toUseCaseInput($request);
+        $this->useCase->execute($useCaseInput);
         return response()->noContent();
     }
 
@@ -41,12 +41,12 @@ class DeleteFavoriteController extends Controller
      * リクエストをユースケースインプットに変換する
      *
      * @param DeleteFavoriteRequest $request
-     * @return DeleteFavoriteUsecaseInput
+     * @return DeleteFavoriteUseCaseInput
      */
-    private function toUsecaseInput(DeleteFavoriteRequest $request): DeleteFavoriteUsecaseInput
+    private function toUseCaseInput(DeleteFavoriteRequest $request): DeleteFavoriteUseCaseInput
     {
         /** @var array<int> $ids */
         $ids = $request->input('ids');
-        return new DeleteFavoriteUsecaseInput(ids: $ids);
+        return new DeleteFavoriteUseCaseInput(ids: $ids);
     }
 }

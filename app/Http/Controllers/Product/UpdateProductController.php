@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\UpdateProductRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Packages\Usecase\Product\Update\UpdateProductUsecaseInput;
-use Packages\Usecase\Product\Update\UpdateProductUsecaseInterface;
-use Packages\Usecase\Product\Update\UpdateProductUsecaseOutput;
+use Packages\UseCase\Product\Update\UpdateProductUseCaseInput;
+use Packages\UseCase\Product\Update\UpdateProductUseCaseInterface;
+use Packages\UseCase\Product\Update\UpdateProductUseCaseOutput;
 
 /**
  * プロダクト更新のコントローラークラス
@@ -18,10 +18,10 @@ class UpdateProductController extends Controller
     /**
      * コンストラクタ
      *
-     * @param UpdateProductUsecaseInterface $usecase
+     * @param UpdateProductUseCaseInterface $useCase
      */
     public function __construct(
-        private UpdateProductUsecaseInterface $usecase,
+        private UpdateProductUseCaseInterface $useCase,
     ) {
     }
 
@@ -34,23 +34,23 @@ class UpdateProductController extends Controller
      */
     public function Update(UpdateProductRequest $request): JsonResponse
     {
-        $usecaseInput = $this->toUsecaseInput($request);
-        $usecaseOutput = $this->usecase->execute($usecaseInput);
-        return $this->toResponse($usecaseOutput);
+        $useCaseInput = $this->toUseCaseInput($request);
+        $useCaseOutput = $this->useCase->execute($useCaseInput);
+        return $this->toResponse($useCaseOutput);
     }
 
     /**
      * リクエストをユースケースインプットに変換する
      *
      * @param UpdateProductRequest $request
-     * @return UpdateProductUsecaseInput
+     * @return UpdateProductUseCaseInput
      */
-    private function toUsecaseInput(UpdateProductRequest $request): UpdateProductUsecaseInput
+    private function toUseCaseInput(UpdateProductRequest $request): UpdateProductUseCaseInput
     {
         /** @var int $id */
         $id = $request->route('id');
 
-        return new UpdateProductUsecaseInput(
+        return new UpdateProductUseCaseInput(
             id: $id,
             userId: (int) Auth::id(),
             name: $request->string('name'),
@@ -64,11 +64,11 @@ class UpdateProductController extends Controller
     /**
      * DTOをレスポンスに変換する
      *
-     * @param UpdateProductUsecaseOutput $usecaseOutput
+     * @param UpdateProductUseCaseOutput $useCaseOutput
      * @return JsonResponse
      */
-    private function toResponse(UpdateProductUsecaseOutput $usecaseOutput): JsonResponse
+    private function toResponse(UpdateProductUseCaseOutput $useCaseOutput): JsonResponse
     {
-        return response()->json(get_object_vars($usecaseOutput));
+        return response()->json(get_object_vars($useCaseOutput));
     }
 }

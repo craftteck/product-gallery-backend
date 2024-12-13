@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\ReadProductRequest;
 use Illuminate\Http\JsonResponse;
-use Packages\Usecase\Product\Read\ReadProductUsecaseInput;
-use Packages\Usecase\Product\Read\ReadProductUsecaseInterface;
-use Packages\Usecase\Product\Read\ReadProductUsecaseOutput;
+use Packages\UseCase\Product\Read\ReadProductUseCaseInput;
+use Packages\UseCase\Product\Read\ReadProductUseCaseInterface;
+use Packages\UseCase\Product\Read\ReadProductUseCaseOutput;
 
 /**
  * プロダクト取得のコントローラークラス
@@ -17,10 +17,10 @@ class ReadProductController extends Controller
     /**
      * コンストラクタ
      *
-     * @param ReadProductUsecaseInterface $usecase
+     * @param ReadProductUseCaseInterface $useCase
      */
     public function __construct(
-        private ReadProductUsecaseInterface $usecase,
+        private ReadProductUseCaseInterface $useCase,
     ) {
     }
 
@@ -33,32 +33,32 @@ class ReadProductController extends Controller
      */
     public function read(ReadProductRequest $request): JsonResponse
     {
-        $usecaseInput = $this->toUsecaseInput($request);
-        $usecaseOutput = $this->usecase->execute($usecaseInput);
-        return $this->toResponse($usecaseOutput);
+        $useCaseInput = $this->toUseCaseInput($request);
+        $useCaseOutput = $this->useCase->execute($useCaseInput);
+        return $this->toResponse($useCaseOutput);
     }
 
     /**
      * リクエストをユースケースインプットに変換する
      *
      * @param ReadProductRequest $request
-     * @return ReadProductUsecaseInput
+     * @return ReadProductUseCaseInput
      */
-    private function toUsecaseInput(ReadProductRequest $request): ReadProductUsecaseInput
+    private function toUseCaseInput(ReadProductRequest $request): ReadProductUseCaseInput
     {
         /** @var int $id */
         $id = $request->route('id');
-        return new ReadProductUsecaseInput(id: $id);
+        return new ReadProductUseCaseInput(id: $id);
     }
 
     /**
      * DTOをレスポンスに変換する
      *
-     * @param ReadProductUsecaseOutput $usecaseOutput
+     * @param ReadProductUseCaseOutput $useCaseOutput
      * @return JsonResponse
      */
-    private function toResponse(ReadProductUsecaseOutput $usecaseOutput): JsonResponse
+    private function toResponse(ReadProductUseCaseOutput $useCaseOutput): JsonResponse
     {
-        return response()->json(get_object_vars($usecaseOutput));
+        return response()->json(get_object_vars($useCaseOutput));
     }
 }

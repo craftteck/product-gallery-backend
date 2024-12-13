@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\CreateProductRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Packages\Usecase\Product\Create\CreateProductUsecaseInput;
-use Packages\Usecase\Product\Create\CreateProductUsecaseInterface;
-use Packages\Usecase\Product\Create\CreateProductUsecaseOutput;
+use Packages\UseCase\Product\Create\CreateProductUseCaseInput;
+use Packages\UseCase\Product\Create\CreateProductUseCaseInterface;
+use Packages\UseCase\Product\Create\CreateProductUseCaseOutput;
 
 /**
  * プロダクト新規作成のコントローラークラス
@@ -18,10 +18,10 @@ class CreateProductController extends Controller
     /**
      * コンストラクタ
      *
-     * @param CreateProductUsecaseInterface $usecase
+     * @param CreateProductUseCaseInterface $useCase
      */
     public function __construct(
-        private CreateProductUsecaseInterface $usecase,
+        private CreateProductUseCaseInterface $useCase,
     ) {
     }
 
@@ -34,20 +34,20 @@ class CreateProductController extends Controller
      */
     public function create(CreateProductRequest $request): JsonResponse
     {
-        $usecaseInput = $this->toUsecaseInput($request);
-        $usecaseOutput = $this->usecase->execute($usecaseInput);
-        return $this->toResponse($usecaseOutput);
+        $useCaseInput = $this->toUseCaseInput($request);
+        $useCaseOutput = $this->useCase->execute($useCaseInput);
+        return $this->toResponse($useCaseOutput);
     }
 
     /**
      * リクエストをユースケースインプットに変換する
      *
      * @param CreateProductRequest $request
-     * @return CreateProductUsecaseInput
+     * @return CreateProductUseCaseInput
      */
-    private function toUsecaseInput(CreateProductRequest $request): CreateProductUsecaseInput
+    private function toUseCaseInput(CreateProductRequest $request): CreateProductUseCaseInput
     {
-        return new CreateProductUsecaseInput(
+        return new CreateProductUseCaseInput(
             userId: (int) Auth::id(),
             name: $request->string('name'),
             summary: $request->string('summary'),
@@ -59,11 +59,11 @@ class CreateProductController extends Controller
     /**
      * DTOをレスポンスに変換する
      *
-     * @param CreateProductUsecaseOutput $usecaseOutput
+     * @param CreateProductUseCaseOutput $useCaseOutput
      * @return JsonResponse
      */
-    private function toResponse(CreateProductUsecaseOutput $usecaseOutput): JsonResponse
+    private function toResponse(CreateProductUseCaseOutput $useCaseOutput): JsonResponse
     {
-        return response()->json(get_object_vars($usecaseOutput));
+        return response()->json(get_object_vars($useCaseOutput));
     }
 }

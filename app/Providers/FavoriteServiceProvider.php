@@ -5,10 +5,10 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Packages\Domain\Favorite\FavoriteRepositoryInterface;
 use Packages\Infrastructure\Favorite\FavoriteRepository;
-use Packages\Usecase\Favorite\Create\CreateFavoriteUsecase;
-use Packages\Usecase\Favorite\Create\CreateFavoriteUsecaseInterface;
-use Packages\Usecase\Favorite\Delete\DeleteFavoriteUsecase;
-use Packages\Usecase\Favorite\Delete\DeleteFavoriteUsecaseInterface;
+use Packages\UseCase\Favorite\Create\CreateFavoriteUseCase;
+use Packages\UseCase\Favorite\Create\CreateFavoriteUseCaseInterface;
+use Packages\UseCase\Favorite\Delete\DeleteFavoriteUseCase;
+use Packages\UseCase\Favorite\Delete\DeleteFavoriteUseCaseInterface;
 
 class FavoriteServiceProvider extends ServiceProvider
 {
@@ -23,13 +23,13 @@ class FavoriteServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            CreateFavoriteUsecaseInterface::class,
-            CreateFavoriteUsecase::class,
+            CreateFavoriteUseCaseInterface::class,
+            CreateFavoriteUseCase::class,
         );
 
         $this->app->bind(
-            DeleteFavoriteUsecaseInterface::class,
-            DeleteFavoriteUsecase::class,
+            DeleteFavoriteUseCaseInterface::class,
+            DeleteFavoriteUseCase::class,
         );
     }
 
