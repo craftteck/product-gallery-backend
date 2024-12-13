@@ -62,46 +62,6 @@ parameters:
 			path: app/Providers/AppServiceProvider.php
 
 		-
-			message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
-			count: 1
-			path: config/app.php
-
-		-
-			message: "#^Parameter \\#1 \\$title of static method Illuminate\\\\Support\\\\Str\\:\\:slug\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: config/cache.php
-
-		-
-			message: "#^Parameter \\#1 \\$title of static method Illuminate\\\\Support\\\\Str\\:\\:slug\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: config/database.php
-
-		-
-			message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
-			count: 1
-			path: config/logging.php
-
-		-
-			message: "#^Cannot cast mixed to int\\.$#"
-			count: 3
-			path: config/queue.php
-
-		-
-			message: "#^Parameter \\#1 \\$url of function parse_url expects string, mixed given\\.$#"
-			count: 1
-			path: config/sanctum.php
-
-		-
-			message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
-			count: 1
-			path: config/sanctum.php
-
-		-
-			message: "#^Parameter \\#1 \\$title of static method Illuminate\\\\Support\\\\Str\\:\\:slug\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: config/session.php
-
-		-
 			message: "#^Cannot call method hasVerifiedEmail\\(\\) on App\\\\Models\\\\User\\|null\\.$#"
 			count: 2
 			path: tests/Feature/Auth/EmailVerificationTest.php
