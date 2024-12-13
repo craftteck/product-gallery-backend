@@ -5,6 +5,7 @@ namespace Packages\Infrastructure\Product;
 use App\Exceptions\OptimisticLockException;
 use App\Models\Product;
 use Packages\Domain\Product\Product as ProductEntity;
+use Packages\Domain\Product\ProductName;
 use Packages\Domain\Product\ProductRepositoryInterface;
 
 /**
@@ -34,7 +35,7 @@ final readonly class ProductRepository implements ProductRepositoryInterface
     {
         $record = Product::create([
             'user_id' => $product->userId,
-            'name' => $product->name,
+            'name' => $product->name->value(),
             'summary' => $product->summary,
             'description' => $product->description,
             'url' => $product->url,
@@ -60,7 +61,7 @@ final readonly class ProductRepository implements ProductRepositoryInterface
         }
 
         $target->update([
-            'name' => $product->name,
+            'name' => $product->name->value(),
             'summary' => $product->summary,
             'description' => $product->description,
             'url' => $product->url,
@@ -95,7 +96,7 @@ final readonly class ProductRepository implements ProductRepositoryInterface
         return new ProductEntity(
             id: $record->id,
             userId: $record->user_id,
-            name: $record->name,
+            name: new ProductName($record->name),
             summary: $record->summary,
             description: $record->description,
             url: $record->url,

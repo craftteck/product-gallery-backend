@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Packages\Domain\Product\ProductName;
 
 class CreateProductRequest extends FormRequest
 {
@@ -21,9 +22,10 @@ class CreateProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        // TODO: バリデーションのテスト
+        $productNameMaxLength = ProductName::MAX_LENGTH;
+
         return [
-            'name' => 'required|string|max:100',
+            'name' => "required|string|max:$productNameMaxLength",
             'summary' => 'required|string|max:300',
             'description' => 'required|string|max:2000',
             'url' => 'required|url',

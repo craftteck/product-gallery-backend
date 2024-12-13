@@ -59,6 +59,14 @@ class ReadProductController extends Controller
      */
     private function toResponse(ProductDto $dto): JsonResponse
     {
-        return response()->json(get_object_vars($dto));
+        return response()->json([
+            'id' => $dto->id,
+            'userId' => $dto->userId,
+            'name' => $dto->name->value(),
+            'summary' => $dto->summary,
+            'description' => $dto->description,
+            'url' => $dto->url,
+            'version' => $dto->version,
+        ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace Packages\UseCase\Product\Create;
 
 use Packages\Domain\Product\Product;
+use Packages\Domain\Product\ProductName;
 use Packages\Domain\Product\ProductRepositoryInterface;
 use Packages\UseCase\Product\ProductDto;
 
