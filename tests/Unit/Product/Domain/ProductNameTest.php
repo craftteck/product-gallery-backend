@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 class ProductNameTest extends TestCase
 {
     #[Test]
-    #[DataProvider("correctProductNameStringProvider")]
+    #[DataProvider('correctProductNameStringProvider')]
     public function プロダクト名は1文字以上、100文字以下であること(string $productNameString): void
     {
         $productName = new ProductName($productNameString);
@@ -30,7 +30,7 @@ class ProductNameTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider("incorrectProductNameStringProvider")]
+    #[DataProvider('incorrectProductNameStringProvider')]
     public function プロダクト名が空文字または101文字以上の場合、エラーが発生する(string $productNameString): void
     {
         $this->expectException(\InvalidArgumentException::class);

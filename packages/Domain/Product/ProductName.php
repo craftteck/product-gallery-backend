@@ -36,7 +36,7 @@ readonly class ProductName
 
     /**
      * 値を取得
-     * 
+     *
      * @return string
      */
     public function value(): string
@@ -46,7 +46,7 @@ readonly class ProductName
 
     /**
      * 値オブジェクト同士が等しいか判定
-     * 
+     *
      * @param ProductName $name
      * @return bool
      */

@@ -4,8 +4,8 @@ namespace Packages\UseCase\Product\Update;
 
 use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
-use Packages\UseCase\Product\ProductDto;
 use Packages\UseCase\Product\Create\RegisterProductCommand;
+use Packages\UseCase\Product\ProductDto;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
