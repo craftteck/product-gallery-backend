@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\CreateProductRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Packages\UseCase\Product\Create\CreateProductUseCaseInput;
-use Packages\UseCase\Product\Create\CreateProductUseCaseInterface;
-use Packages\UseCase\Product\Create\CreateProductUseCaseOutput;
+use Packages\UseCase\Product\Create\CreateProductUseCase;
+use Packages\UseCase\Product\ProductDto;
+use Packages\UseCase\Product\Create\RegisterProductCommand;
 
 /**
  * プロダクト新規作成のコントローラークラス
@@ -18,10 +18,10 @@ class CreateProductController extends Controller
     /**
      * コンストラクタ
      *
-     * @param CreateProductUseCaseInterface $useCase
+     * @param CreateProductUseCase $useCase
      */
     public function __construct(
-        private CreateProductUseCaseInterface $useCase,
+        private CreateProductUseCase $useCase
     ) {
     }
 
@@ -34,36 +34,38 @@ class CreateProductController extends Controller
      */
     public function create(CreateProductRequest $request): JsonResponse
     {
-        $useCaseInput = $this->toUseCaseInput($request);
-        $useCaseOutput = $this->useCase->execute($useCaseInput);
-        return $this->toResponse($useCaseOutput);
+        $command = $this->toCommand($request);
+        $dto = $this->useCase->execute($command);
+        return $this->toResponse($dto);
     }
 
     /**
-     * リクエストをユースケースインプットに変換する
+     * リクエストをコマンドに変換する
      *
      * @param CreateProductRequest $request
-     * @return CreateProductUseCaseInput
+     * @return RegisterProductCommand
      */
-    private function toUseCaseInput(CreateProductRequest $request): CreateProductUseCaseInput
+    private function toCommand(CreateProductRequest $request): RegisterProductCommand
     {
-        return new CreateProductUseCaseInput(
+        return new RegisterProductCommand(
+            id: null,
             userId: (int) Auth::id(),
             name: $request->string('name'),
             summary: $request->string('summary'),
             description: $request->string('description'),
             url: $request->string('url'),
+            version: null,
         );
     }
 
     /**
      * DTOをレスポンスに変換する
      *
-     * @param CreateProductUseCaseOutput $useCaseOutput
+     * @param ProductDto $dto
      * @return JsonResponse
      */
-    private function toResponse(CreateProductUseCaseOutput $useCaseOutput): JsonResponse
+    private function toResponse(ProductDto $dto): JsonResponse
     {
-        return response()->json(get_object_vars($useCaseOutput));
+        return response()->json(get_object_vars($dto));
     }
 }

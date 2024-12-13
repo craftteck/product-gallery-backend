@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\DeleteProductRequest;
 use Illuminate\Http\Response;
-use Packages\UseCase\Product\Delete\DeleteProductUseCaseInput;
-use Packages\UseCase\Product\Delete\DeleteProductUseCaseInterface;
+use Packages\UseCase\Product\Delete\DeleteProductCommand;
+use Packages\UseCase\Product\Delete\DeleteProductUseCase;
 
 /**
  * プロダクト削除のコントローラークラス
@@ -16,10 +16,10 @@ class DeleteProductController extends Controller
     /**
      * コンストラクタ
      *
-     * @param DeleteProductUseCaseInterface $useCase
+     * @param DeleteProductUseCase $useCase
      */
     public function __construct(
-        private DeleteProductUseCaseInterface $useCase,
+        private DeleteProductUseCase $useCase,
     ) {
     }
 
@@ -32,8 +32,8 @@ class DeleteProductController extends Controller
      */
     public function delete(DeleteProductRequest $request): Response
     {
-        $useCaseInput = $this->toUseCaseInput($request);
-        $this->useCase->execute($useCaseInput);
+        $command = $this->toCommand($request);
+        $this->useCase->execute($command);
         return response()->noContent();
     }
 
@@ -41,12 +41,12 @@ class DeleteProductController extends Controller
      * リクエストをユースケースインプットに変換する
      *
      * @param DeleteProductRequest $request
-     * @return DeleteProductUseCaseInput
+     * @return DeleteProductCommand
      */
-    private function toUseCaseInput(DeleteProductRequest $request): DeleteProductUseCaseInput
+    private function toCommand(DeleteProductRequest $request): DeleteProductCommand
     {
         /** @var array<int> $ids */
         $ids = $request->input('ids');
-        return new DeleteProductUseCaseInput(ids: $ids);
+        return new DeleteProductCommand(ids: $ids);
     }
 }

@@ -4,12 +4,14 @@ namespace Packages\UseCase\Product\Update;
 
 use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
+use Packages\UseCase\Product\ProductDto;
+use Packages\UseCase\Product\Create\RegisterProductCommand;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * プロダクト更新のユースケースクラス
  */
-final readonly class UpdateProductUseCase implements UpdateProductUseCaseInterface
+readonly class UpdateProductUseCase
 {
     /**
      * コンストラクタ
@@ -24,37 +26,38 @@ final readonly class UpdateProductUseCase implements UpdateProductUseCaseInterfa
     /**
      * プロダクトを更新する
      *
-     * @param UpdateProductUseCaseInput $useCaseInput
-     * @return UpdateProductUseCaseOutput
+     * @param RegisterProductCommand $command
+     * @return ProductDto
      */
-    public function execute(UpdateProductUseCaseInput $useCaseInput): UpdateProductUseCaseOutput
+    public function execute(RegisterProductCommand $command): ProductDto
     {
-        $product = $this->repository->findById($useCaseInput->id);
+        assert($command->id !== null);
+        $product = $this->repository->findById($command->id);
 
         if (is_null($product)) {
             throw new NotFoundHttpException('Target resource not found.');
         }
 
-        $updated = $this->repository->update($this->toEntity($useCaseInput));
-        return $this->toUseCaseOutput($updated);
+        $updated = $this->repository->update($this->toEntity($command));
+        return $this->toDto($updated);
     }
 
     /**
      * コマンドをエンティティに変換する
      *
-     * @param UpdateProductUseCaseInput $useCaseInput
+     * @param RegisterProductCommand $command
      * @return Product
      */
-    private function toEntity(UpdateProductUseCaseInput $useCaseInput): Product
+    private function toEntity(RegisterProductCommand $command): Product
     {
         return new Product(
-            id: $useCaseInput->id,
-            userId: $useCaseInput->userId,
-            name: $useCaseInput->name,
-            summary: $useCaseInput->summary,
-            description: $useCaseInput->description,
-            url: $useCaseInput->url,
-            version: $useCaseInput->version,
+            id: $command->id,
+            userId: $command->userId,
+            name: $command->name,
+            summary: $command->summary,
+            description: $command->description,
+            url: $command->url,
+            version: $command->version,
         );
     }
 
@@ -62,16 +65,16 @@ final readonly class UpdateProductUseCase implements UpdateProductUseCaseInterfa
      * プロダクトをDTOに変換する
      *
      * @param Product $product
-     * @return UpdateProductUseCaseOutput
+     * @return ProductDto
      */
-    private function toUseCaseOutput(Product $product): UpdateProductUseCaseOutput
+    private function toDto(Product $product): ProductDto
     {
         /** @var int $productId */
         $productId = $product->id;
         /** @var int $version */
         $version = $product->version;
 
-        return new UpdateProductUseCaseOutput(
+        return new ProductDto(
             id: $productId,
             userId: $product->userId,
             name: $product->name,

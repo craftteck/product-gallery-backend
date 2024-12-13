@@ -1,18 +1,21 @@
 <?php
 
-namespace Packages\UseCase\Product\Update;
+namespace Packages\UseCase\Product;
 
 /**
- * プロダクト更新のDTO
+ * プロダクト作成のDTOクラス
  */
-final readonly class UpdateProductUseCaseOutput
+final readonly class ProductDto
 {
     /**
+     * コンストラクタ
+     *
      * @param int $id
      * @param int $userId
      * @param string $name
      * @param string $summary
      * @param string $description
+     * @param string $url
      * @param int $version
      */
     public function __construct(

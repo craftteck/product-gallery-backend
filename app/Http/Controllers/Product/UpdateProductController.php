@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\UpdateProductRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Packages\UseCase\Product\Update\UpdateProductUseCaseInput;
-use Packages\UseCase\Product\Update\UpdateProductUseCaseInterface;
-use Packages\UseCase\Product\Update\UpdateProductUseCaseOutput;
+use Packages\UseCase\Product\ProductDto;
+use Packages\UseCase\Product\Create\RegisterProductCommand;
+use Packages\UseCase\Product\Update\UpdateProductUseCase;
 
 /**
  * プロダクト更新のコントローラークラス
@@ -18,10 +18,10 @@ class UpdateProductController extends Controller
     /**
      * コンストラクタ
      *
-     * @param UpdateProductUseCaseInterface $useCase
+     * @param UpdateProductUseCase $useCase
      */
     public function __construct(
-        private UpdateProductUseCaseInterface $useCase,
+        private UpdateProductUseCase $useCase,
     ) {
     }
 
@@ -34,23 +34,23 @@ class UpdateProductController extends Controller
      */
     public function Update(UpdateProductRequest $request): JsonResponse
     {
-        $useCaseInput = $this->toUseCaseInput($request);
+        $useCaseInput = $this->toCommand($request);
         $useCaseOutput = $this->useCase->execute($useCaseInput);
         return $this->toResponse($useCaseOutput);
     }
 
     /**
-     * リクエストをユースケースインプットに変換する
+     * リクエストをコマンドに変換する
      *
      * @param UpdateProductRequest $request
-     * @return UpdateProductUseCaseInput
+     * @return RegisterProductCommand
      */
-    private function toUseCaseInput(UpdateProductRequest $request): UpdateProductUseCaseInput
+    private function toCommand(UpdateProductRequest $request): RegisterProductCommand
     {
         /** @var int $id */
         $id = $request->route('id');
 
-        return new UpdateProductUseCaseInput(
+        return new RegisterProductCommand(
             id: $id,
             userId: (int) Auth::id(),
             name: $request->string('name'),
@@ -64,11 +64,11 @@ class UpdateProductController extends Controller
     /**
      * DTOをレスポンスに変換する
      *
-     * @param UpdateProductUseCaseOutput $useCaseOutput
+     * @param ProductDto $dto
      * @return JsonResponse
      */
-    private function toResponse(UpdateProductUseCaseOutput $useCaseOutput): JsonResponse
+    private function toResponse(ProductDto $dto): JsonResponse
     {
-        return response()->json(get_object_vars($useCaseOutput));
+        return response()->json(get_object_vars($dto));
     }
 }

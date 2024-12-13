@@ -4,9 +4,9 @@ namespace Tests\Unit\Product;
 
 use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
+use Packages\UseCase\Product\ProductDto;
+use Packages\UseCase\Product\Create\RegisterProductCommand;
 use Packages\UseCase\Product\Update\UpdateProductUseCase;
-use Packages\UseCase\Product\Update\UpdateProductUseCaseInput;
-use Packages\UseCase\Product\Update\UpdateProductUseCaseOutput;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -17,7 +17,7 @@ class UpdateProductUseCaseTest extends TestCase
      */
     public function test_execute(): void
     {
-        $useCaseInput = new UpdateProductUseCaseInput(
+        $command = new RegisterProductCommand(
             id: 1,
             userId: 1,
             name: 'updated name',
@@ -31,7 +31,7 @@ class UpdateProductUseCaseTest extends TestCase
         $repository
             ->expects($this->once())
             ->method('findById')
-            ->with($this->equalTo($useCaseInput->id))
+            ->with($this->equalTo($command->id))
             ->willReturn(
                 new Product(
                     id: 1,
@@ -60,9 +60,9 @@ class UpdateProductUseCaseTest extends TestCase
 
         /** @var ProductRepositoryInterface&\PHPUnit\Framework\MockObject\MockObject $repository */
         $useCase = new UpdateProductUseCase($repository);
-        $result = $useCase->execute($useCaseInput);
+        $result = $useCase->execute($command);
 
-        $expected = new UpdateProductUseCaseOutput(
+        $expected = new ProductDto(
             id: 1,
             userId: 1,
             name: 'updated name',
@@ -79,7 +79,7 @@ class UpdateProductUseCaseTest extends TestCase
      */
     public function test_target_resource_not_found(): void
     {
-        $useCaseInput = new UpdateProductUseCaseInput(
+        $command = new RegisterProductCommand(
             id: 1,
             userId: 1,
             name: 'updated name',
@@ -94,13 +94,13 @@ class UpdateProductUseCaseTest extends TestCase
         $repository
             ->expects($this->once())
             ->method('findById')
-            ->with($this->equalTo($useCaseInput->id))
+            ->with($this->equalTo($command->id))
             ->willReturn(null);
 
         $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('Target resource not found.');
 
         $useCase = new UpdateProductUseCase($repository);
-        $useCase->execute($useCaseInput);
+        $useCase->execute($command);
     }
 }

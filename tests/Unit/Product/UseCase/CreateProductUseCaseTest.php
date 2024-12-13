@@ -5,8 +5,8 @@ namespace Tests\Unit\Product;
 use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
 use Packages\UseCase\Product\Create\CreateProductUseCase;
-use Packages\UseCase\Product\Create\CreateProductUseCaseInput;
-use Packages\UseCase\Product\Create\CreateProductUseCaseOutput;
+use Packages\UseCase\Product\Create\RegisterProductCommand;
+use Packages\UseCase\Product\ProductDto;
 use PHPUnit\Framework\TestCase;
 
 class CreateProductUseCaseTest extends TestCase
@@ -16,12 +16,14 @@ class CreateProductUseCaseTest extends TestCase
      */
     public function test_execute(): void
     {
-        $useCaseInput = new CreateProductUseCaseInput(
+        $command = new RegisterProductCommand(
+            id: null,
             userId: 1,
             name: 'name',
             summary: 'summary',
             description: 'description',
             url: 'url',
+            version: null,
         );
 
         /** @var ProductRepositoryInterface&\PHPUnit\Framework\MockObject\MockObject $repository */
@@ -53,9 +55,9 @@ class CreateProductUseCaseTest extends TestCase
             );
 
         $useCase = new CreateProductUseCase($repository);
-        $result = $useCase->execute($useCaseInput);
+        $result = $useCase->execute($command);
 
-        $expected = new CreateProductUseCaseOutput(
+        $expected = new ProductDto(
             id: 1,
             userId: 1,
             name: 'name',

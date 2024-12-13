@@ -4,11 +4,12 @@ namespace Packages\UseCase\Product\Create;
 
 use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
+use Packages\UseCase\Product\ProductDto;
 
 /**
  * プロダクト作成のユースケースクラス
  */
-final readonly class CreateProductUseCase implements CreateProductUseCaseInterface
+readonly class CreateProductUseCase
 {
     /**
      * コンストラクタ
@@ -23,30 +24,30 @@ final readonly class CreateProductUseCase implements CreateProductUseCaseInterfa
     /**
      * プロダクトを作成する
      *
-     * @param CreateProductUseCaseInput $useCaseInput
-     * @return CreateProductUseCaseOutput
+     * @param RegisterProductCommand $command
+     * @return ProductDto
      */
-    public function execute(CreateProductUseCaseInput $useCaseInput): CreateProductUseCaseOutput
+    public function execute(RegisterProductCommand $command): ProductDto
     {
-        $product = $this->repository->insert($this->toEntity($useCaseInput));
-        return $this->toUseCaseOutput($product);
+        $product = $this->repository->insert($this->toEntity($command));
+        return $this->toDto($product);
     }
 
     /**
-     * ユースケースインプットをエンティティに変換する
+     * コマンドをエンティティに変換する
      *
-     * @param CreateProductUseCaseInput $useCaseInput
+     * @param RegisterProductCommand $command
      * @return Product
      */
-    private function toEntity(CreateProductUseCaseInput $useCaseInput): Product
+    private function toEntity(RegisterProductCommand $command): Product
     {
         return new Product(
             id: null,
-            userId: $useCaseInput->userId,
-            name: $useCaseInput->name,
-            summary: $useCaseInput->summary,
-            description: $useCaseInput->description,
-            url: $useCaseInput->url,
+            userId: $command->userId,
+            name: $command->name,
+            summary: $command->summary,
+            description: $command->description,
+            url: $command->url,
             version: null,
         );
     }
@@ -55,16 +56,16 @@ final readonly class CreateProductUseCase implements CreateProductUseCaseInterfa
      * エンティティをDTOに変換する
      *
      * @param Product $product
-     * @return CreateProductUseCaseOutput
+     * @return ProductDto
      */
-    private function toUseCaseOutput(Product $product): CreateProductUseCaseOutput
+    private function toDto(Product $product): ProductDto
     {
         /** @var int $productId */
         $productId = $product->id;
         /** @var int $version */
         $version = $product->version;
 
-        return new CreateProductUseCaseOutput(
+        return new ProductDto(
             id: $productId,
             userId: $product->userId,
             name: $product->name,

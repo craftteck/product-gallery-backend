@@ -3,9 +3,9 @@
 namespace Packages\UseCase\Product\Read;
 
 /**
- * プロダクト取得のユースケースインプット
+ * プロダクト取得のコマンド
  */
-final readonly class ReadProductUseCaseInput
+final readonly class ReadProductCommand
 {
     /**
      * コンストラクタ

@@ -3,15 +3,15 @@
 namespace Tests\Unit\Product;
 
 use Packages\Domain\Product\ProductRepositoryInterface;
+use Packages\UseCase\Product\Delete\DeleteProductCommand;
 use Packages\UseCase\Product\Delete\DeleteProductUseCase;
-use Packages\UseCase\Product\Delete\DeleteProductUseCaseInput;
 use PHPUnit\Framework\TestCase;
 
 class DeleteProductUseCaseTest extends TestCase
 {
     public function test_execute(): void
     {
-        $useCaseInput = new DeleteProductUseCaseInput(
+        $command = new DeleteProductCommand(
             ids: [1, 2, 3],
         );
 
@@ -20,9 +20,9 @@ class DeleteProductUseCaseTest extends TestCase
         $repository
             ->expects($this->once())
             ->method('delete')
-            ->with($this->equalTo($useCaseInput->ids));
+            ->with($this->equalTo($command->ids));
 
         $useCase = new DeleteProductUseCase($repository);
-        $useCase->execute($useCaseInput);
+        $useCase->execute($command);
     }
 }

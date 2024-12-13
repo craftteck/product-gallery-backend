@@ -4,12 +4,13 @@ namespace Packages\UseCase\Product\Read;
 
 use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
+use Packages\UseCase\Product\ProductDto;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * プロダクト取得のユースケースクラス
  */
-final readonly class ReadProductUseCase implements ReadProductUseCaseInterface
+readonly class ReadProductUseCase
 {
     /**
      * @param ProductRepositoryInterface $repository
@@ -22,34 +23,34 @@ final readonly class ReadProductUseCase implements ReadProductUseCaseInterface
     /**
      * プロダクトを取得する
      *
-     * @param ReadProductUseCaseInput $useCaseInput
-     * @return ReadProductUseCaseOutput
+     * @param ReadProductCommand $command
+     * @return ProductDto
      */
-    public function execute(ReadProductUseCaseInput $useCaseInput): ReadProductUseCaseOutput
+    public function execute(ReadProductCommand $command): ProductDto
     {
-        $product = $this->repository->findById($useCaseInput->id);
+        $product = $this->repository->findById($command->id);
 
         if (is_null($product)) {
             throw new NotFoundHttpException('Target resource not found.');
         }
 
-        return $this->toUseCaseOutput($product);
+        return $this->toDto($product);
     }
 
     /**
      * エンティティをDTOに変換する
      *
      * @param Product $product
-     * @return ReadProductUseCaseOutput
+     * @return ProductDto
      */
-    private function toUseCaseOutput(Product $product): ReadProductUseCaseOutput
+    private function toDto(Product $product): ProductDto
     {
         /** @var int $productId */
         $productId = $product->id;
         /** @var int $version */
         $version = $product->version;
 
-        return new ReadProductUseCaseOutput(
+        return new ProductDto(
             id: $productId,
             userId: $product->userId,
             name: $product->name,

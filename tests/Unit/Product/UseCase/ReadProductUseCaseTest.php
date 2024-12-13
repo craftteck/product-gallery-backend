@@ -4,9 +4,9 @@ namespace Tests\Unit\Product;
 
 use Packages\Domain\Product\Product;
 use Packages\Domain\Product\ProductRepositoryInterface;
+use Packages\UseCase\Product\ProductDto;
+use Packages\UseCase\Product\Read\ReadProductCommand;
 use Packages\UseCase\Product\Read\ReadProductUseCase;
-use Packages\UseCase\Product\Read\ReadProductUseCaseInput;
-use Packages\UseCase\Product\Read\ReadProductUseCaseOutput;
 use PHPUnit\Framework\TestCase;
 
 class ReadProductUseCaseTest extends TestCase
@@ -16,13 +16,13 @@ class ReadProductUseCaseTest extends TestCase
      */
     public function test_execute(): void
     {
-        $useCaseInput = new ReadProductUseCaseInput(id: 1);
+        $command = new ReadProductCommand(id: 1);
 
         $repository = $this->createMock(ProductRepositoryInterface::class);
         $repository
             ->expects($this->once())
             ->method('findById')
-            ->with($this->equalTo($useCaseInput->id))
+            ->with($this->equalTo($command->id))
             ->willReturn(
                 new Product(
                     id: 1,
@@ -36,9 +36,9 @@ class ReadProductUseCaseTest extends TestCase
             );
 
         $useCase = new ReadProductUseCase($repository);
-        $result = $useCase->execute($useCaseInput);
+        $result = $useCase->execute($command);
 
-        $expected = new ReadProductUseCaseOutput(
+        $expected = new ProductDto(
             id: 1,
             userId: 1,
             name: 'name',

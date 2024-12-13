@@ -7,7 +7,7 @@ use Packages\Domain\Product\ProductRepositoryInterface;
 /**
  * プロダクト削除のユースケースクラス
  */
-final readonly class DeleteProductUseCase implements DeleteProductUseCaseInterface
+readonly class DeleteProductUseCase
 {
     /**
      * コンストラクタ
@@ -22,10 +22,10 @@ final readonly class DeleteProductUseCase implements DeleteProductUseCaseInterfa
     /**
      * プロダクトを削除する
      *
-     * @param DeleteProductUseCaseInput $useCaseInput
+     * @param DeleteProductCommand $command
      */
-    public function execute(DeleteProductUseCaseInput $useCaseInput): void
+    public function execute(DeleteProductCommand $command): void
     {
-        $this->repository->delete($useCaseInput->ids);
+        $this->repository->delete($command->ids);
     }
 }
