@@ -7,8 +7,8 @@ use InvalidArgumentException;
 /** プロダクト名の値オブジェクト */
 readonly class ProductName
 {
-    public const MIN_LENGTH = 1;
-    public const MAX_LENGTH = 100;
+    public const int MIN_LENGTH = 1;
+    public const int MAX_LENGTH = 100;
 
     /**
      * コンストラクタ
