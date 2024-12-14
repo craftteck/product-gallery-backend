@@ -35,7 +35,7 @@ final readonly class ProductRepository implements ProductRepositoryInterface
     {
         $record = Product::create([
             'user_id' => $product->userId,
-            'name' => $product->name->value(),
+            'name' => $product->name->value,
             'summary' => $product->summary,
             'description' => $product->description,
             'url' => $product->url,
@@ -61,7 +61,7 @@ final readonly class ProductRepository implements ProductRepositoryInterface
         }
 
         $target->update([
-            'name' => $product->name->value(),
+            'name' => $product->name->value,
             'summary' => $product->summary,
             'description' => $product->description,
             'url' => $product->url,

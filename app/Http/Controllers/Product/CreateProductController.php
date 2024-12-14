@@ -70,7 +70,7 @@ class CreateProductController extends Controller
         return response()->json([
             'id' => $dto->id,
             'userId' => $dto->userId,
-            'name' => $dto->name->value(),
+            'name' => $dto->name->value,
             'summary' => $dto->summary,
             'description' => $dto->description,
             'url' => $dto->url,

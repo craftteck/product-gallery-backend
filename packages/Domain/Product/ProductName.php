@@ -16,7 +16,7 @@ readonly class ProductName
      * @param string $value
      */
     public function __construct(
-        private string $value
+        public string $value
     ) {
         if (!$this->isValid()) {
             throw new InvalidArgumentException();
@@ -32,16 +32,6 @@ readonly class ProductName
     {
         $length = mb_strlen($this->value);
         return $length >= self::MIN_LENGTH && $length <= self::MAX_LENGTH;
-    }
-
-    /**
-     * 値を取得
-     *
-     * @return string
-     */
-    public function value(): string
-    {
-        return $this->value;
     }
 
     /**
